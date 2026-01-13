@@ -19,8 +19,8 @@
             --bg-secondary: #1e293b;
             --bg-tertiary: #334155;
             --text-primary: #ffffff;
-            --text-secondary:  #ffffff;
-            --border-color:  rgba(148, 163, 184, 0.2);
+            --text-secondary:  #cbd5e1;
+            --border-color: rgba(148, 163, 184, 0.2);
             --glass-bg: rgba(15, 23, 42, 0.8);
             --glass-border: rgba(148, 163, 184, 0.3);
             --success-color: #10b981;
@@ -36,8 +36,7 @@
             overflow:  hidden;
         }
 
-        /* Glassmorphism Utilities */
-        .glass {
+        . glass {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
@@ -51,17 +50,15 @@
             border-radius: 16px;
         }
 
-        /* Main Container */
-        .os-container {
+        . os-container {
             width: 100%;
             height:  100vh;
-            display: flex;
-            flex-direction: column;
+            display:  flex;
+            flex-direction:  column;
             position: relative;
             overflow: hidden;
         }
 
-        /* Header */
         .os-header {
             display: flex;
             align-items: center;
@@ -76,12 +73,8 @@
         .os-logo {
             font-size: 20px;
             font-weight:  700;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
             color: #ffffff;
+            letter-spacing: -0.5px;
         }
 
         . os-header-actions {
@@ -90,7 +83,7 @@
             gap: 12px;
         }
 
-        .header-btn {
+        . header-btn {
             width: 36px;
             height: 36px;
             border-radius:  8px;
@@ -115,7 +108,6 @@
             color: #ffffff;
         }
 
-        /* Main Content Area */
         .os-content {
             flex: 1;
             display: flex;
@@ -124,16 +116,14 @@
             padding: 16px;
         }
 
-        /* Main Chat Area */
         .os-main {
             flex: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow:  hidden;
         }
 
-        /* Search Bar */
-        .search-container {
+        . search-container {
             display: flex;
             gap: 12px;
             margin-bottom: 16px;
@@ -149,10 +139,10 @@
             padding: 14px 18px 14px 44px;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius:  12px;
-            color:  #ffffff;
+            border-radius: 12px;
+            color: #ffffff;
             font-size:  14px;
-            transition:  all 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .search-input:focus {
@@ -163,7 +153,7 @@
         }
 
         .search-input::placeholder {
-            color:  #ffffff;
+            color: #cbd5e1;
         }
 
         .search-icon {
@@ -172,10 +162,10 @@
             top: 50%;
             transform: translateY(-50%);
             color: #ffffff;
-            font-size: 18px;
+            font-size:  18px;
         }
 
-        . search-btn {
+        .search-btn {
             padding: 12px 24px;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border: none;
@@ -188,28 +178,27 @@
             min-width: 100px;
         }
 
-        . search-btn:hover {
+        .search-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
         }
 
-        . search-btn: active {
+        .search-btn:active {
             transform: translateY(0);
         }
 
-        . search-btn.loading {
+        .search-btn.loading {
             opacity: 0.6;
             cursor: not-allowed;
         }
 
-        /* Chat Messages Container */
         .chat-container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            overflow:  hidden;
+            overflow: hidden;
             background: var(--glass-bg);
-            border:  1px solid var(--glass-border);
+            border: 1px solid var(--glass-border);
             border-radius: 16px;
             backdrop-filter: blur(12px);
         }
@@ -236,8 +225,8 @@
             border-radius: 4px;
         }
 
-        .messages-area::-webkit-scrollbar-thumb:hover {
-            background:  rgba(148, 163, 184, 0.5);
+        .messages-area::-webkit-scrollbar-thumb: hover {
+            background: rgba(148, 163, 184, 0.5);
         }
 
         .empty-state {
@@ -251,7 +240,7 @@
         }
 
         .empty-state-icon {
-            font-size: 48px;
+            font-size:  48px;
             margin-bottom: 16px;
             opacity: 0.5;
         }
@@ -263,12 +252,11 @@
         }
 
         .empty-state-subtext {
-            font-size: 12px;
-            color: #ffffff;
+            font-size:  12px;
+            color:  #cbd5e1;
             opacity: 0.7;
         }
 
-        /* Messages */
         .message {
             display: flex;
             gap: 12px;
@@ -278,7 +266,7 @@
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform:  translateY(10px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -306,11 +294,11 @@
             border-bottom-right-radius: 4px;
         }
 
-        . message.assistant . message-content {
-            background:  rgba(99, 102, 241, 0.1);
+        . message.assistant .message-content {
+            background: rgba(99, 102, 241, 0.1);
             border: 1px solid var(--glass-border);
             color: #ffffff;
-            border-bottom-left-radius:  4px;
+            border-bottom-left-radius: 4px;
         }
 
         .message-avatar {
@@ -337,7 +325,6 @@
             color: #ffffff;
         }
 
-        /* Loading Indicator */
         .loading-spinner {
             display: inline-flex;
             gap: 6px;
@@ -349,7 +336,7 @@
             height: 8px;
             border-radius: 50%;
             background: #ffffff;
-            animation: bounce 1. 4s infinite;
+            animation: bounce 1.4s infinite;
         }
 
         .loading-dot:nth-child(2) {
@@ -371,12 +358,11 @@
             }
         }
 
-        /* Bottom Input Area */
         .chat-input-area {
             padding: 20px;
-            border-top: 1px solid var(--glass-border);
+            border-top:  1px solid var(--glass-border);
             display: flex;
-            gap:  12px;
+            gap: 12px;
         }
 
         .input-wrapper {
@@ -388,7 +374,7 @@
             width: 100%;
             padding: 12px 16px;
             background: var(--bg-tertiary);
-            border:  1px solid var(--glass-border);
+            border: 1px solid var(--glass-border);
             border-radius: 10px;
             color: #ffffff;
             font-size: 14px;
@@ -405,7 +391,7 @@
         }
 
         .chat-input::placeholder {
-            color: #ffffff;
+            color: #cbd5e1;
         }
 
         .send-btn {
@@ -422,7 +408,7 @@
             height: 44px;
         }
 
-        . send-btn:hover {
+        .send-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
@@ -431,12 +417,11 @@
             transform: translateY(0);
         }
 
-        . send-btn: disabled {
+        .send-btn: disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        /* Right Sidebar - Chat Settings */
         .os-right-sidebar {
             width: 300px;
             display: flex;
@@ -490,7 +475,7 @@
         }
 
         .panel-label {
-            color: #ffffff;
+            color: #cbd5e1;
         }
 
         .panel-value {
@@ -517,7 +502,7 @@
             content: '';
             position: absolute;
             width:  20px;
-            height: 20px;
+            height:  20px;
             border-radius: 10px;
             background: white;
             top: 2px;
@@ -529,7 +514,6 @@
             left: 22px;
         }
 
-        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -601,8 +585,8 @@
             font-size: 20px;
         }
 
-        .modal-close:hover {
-            background:  rgba(99, 102, 241, 0.2);
+        . modal-close:hover {
+            background: rgba(99, 102, 241, 0.2);
             color: #ffffff;
         }
 
@@ -652,7 +636,6 @@
             background: var(--bg-secondary);
         }
 
-        /* Status Messages */
         .error-message {
             padding: 12px 16px;
             background: rgba(239, 68, 68, 0.1);
@@ -660,8 +643,8 @@
             border-radius: 8px;
             color: #fca5a5;
             font-size: 13px;
-            margin-bottom: 12px;
-            display: flex;
+            margin-bottom:  12px;
+            display:  flex;
             align-items: center;
             gap: 8px;
         }
@@ -677,11 +660,11 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: 8px;
             color: #86efac;
-            font-size:  13px;
+            font-size: 13px;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap:  8px;
+            gap: 8px;
         }
 
         .success-message::before {
@@ -689,20 +672,19 @@
             font-size: 14px;
         }
 
-        /* Taskbar */
         .taskbar {
             position: fixed;
             bottom: 30px;
             left: 50%;
-            transform:  translateX(-50%);
+            transform: translateX(-50%);
             background: rgba(26, 26, 46, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50px;
-            backdrop-filter:  blur(20px);
+            backdrop-filter: blur(20px);
             padding: 12px 20px;
             display: flex;
             gap: 15px;
-            align-items:  center;
+            align-items: center;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             z-index: 1000;
         }
@@ -735,7 +717,6 @@
             box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
         }
 
-        /* History List */
         .history-list {
             display: flex;
             flex-direction: column;
@@ -777,24 +758,23 @@
 
         .history-item-time {
             font-size:  12px;
-            color:  #ffffff;
+            color:  #cbd5e1;
             opacity: 0.7;
         }
 
-        . empty-history {
+        .empty-history {
             text-align: center;
             padding: 40px 20px;
-            color: #ffffff;
+            color: #cbd5e1;
             opacity: 0.7;
         }
 
-        /* Responsive Design */
         @media (max-width: 1024px) {
             .os-right-sidebar {
                 width: 260px;
             }
 
-            . message-content {
+            .message-content {
                 max-width: 80%;
             }
         }
@@ -809,7 +789,7 @@
             }
 
             .os-main {
-                flex:  1;
+                flex: 1;
             }
 
             .message-content {
@@ -870,40 +850,25 @@
 </head>
 <body>
     <div class="os-container">
-        <!-- Header -->
         <div class="os-header">
             <div class="os-logo">🧠 Browser OS</div>
             <div class="os-header-actions">
-                <button class="header-btn" id="newChatBtn" title="New Chat">
-                    ➕
-                </button>
-                <button class="header-btn" id="settingsBtn" title="Settings">
-                    ⚙️
-                </button>
-                <button class="header-btn" id="themeBtn" title="Toggle Theme">
-                    🌙
-                </button>
+                <button class="header-btn" id="newChatBtn" title="New Chat">➕</button>
+                <button class="header-btn" id="settingsBtn" title="Settings">⚙️</button>
+                <button class="header-btn" id="themeBtn" title="Toggle Theme">🌙</button>
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="os-content">
-            <!-- Main Chat Area -->
             <div class="os-main">
                 <div class="search-container">
                     <div class="search-bar">
                         <span class="search-icon">🔍</span>
-                        <input 
-                            type="text" 
-                            class="search-input" 
-                            id="searchInput"
-                            placeholder="Ask AI anything...  Start with a question to begin"
-                        >
+                        <input type="text" class="search-input" id="searchInput" placeholder="Ask AI anything...">
                     </div>
                     <button class="search-btn" id="searchBtn">Send</button>
                 </div>
 
-                <!-- Chat Container -->
                 <div class="chat-container">
                     <div class="messages-area" id="messagesArea">
                         <div class="empty-state">
@@ -913,24 +878,16 @@
                         </div>
                     </div>
 
-                    <!-- Chat Input Area -->
                     <div class="chat-input-area">
                         <div class="input-wrapper">
-                            <textarea 
-                                class="chat-input" 
-                                id="chatInput" 
-                                placeholder="Type your message here..."
-                                rows="1"
-                            ></textarea>
+                            <textarea class="chat-input" id="chatInput" placeholder="Type your message here..." rows="1"></textarea>
                         </div>
                         <button class="send-btn" id="sendBtn">Send</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Sidebar -->
             <div class="os-right-sidebar">
-                <!-- AI Settings -->
                 <div class="panel">
                     <div class="panel-title">AI Settings</div>
                     <div class="panel-item">
@@ -941,57 +898,29 @@
                         <span class="panel-label">Temperature</span>
                         <span class="panel-value">0.7</span>
                     </div>
-                    <div class="panel-item">
-                        <span class="panel-label">Max Tokens</span>
-                        <span class="panel-value">2048</span>
-                    </div>
                 </div>
 
-                <!-- Status Panel -->
                 <div class="panel">
                     <div class="panel-title">Status</div>
                     <div class="panel-item">
                         <span class="panel-label">Connection</span>
-                        <span class="panel-value" style="color: var(--success-color);">Connected</span>
+                        <span class="panel-value" style="color: var(--success-color);">✓ Connected</span>
                     </div>
                     <div class="panel-item">
-                        <span class="panel-label">Messages Sent</span>
+                        <span class="panel-label">Messages</span>
                         <span class="panel-value" id="messageCount">0</span>
-                    </div>
-                    <div class="panel-item">
-                        <span class="panel-label">API Status</span>
-                        <span class="panel-value" id="apiStatus" style="color: var(--success-color);">Ready</span>
-                    </div>
-                </div>
-
-                <!-- Preferences -->
-                <div class="panel">
-                    <div class="panel-title">Preferences</div>
-                    <div class="panel-item">
-                        <span class="panel-label">Auto-scroll</span>
-                        <div class="toggle-switch active" id="autoScrollToggle"></div>
-                    </div>
-                    <div class="panel-item">
-                        <span class="panel-label">Animations</span>
-                        <div class="toggle-switch active" id="animToggle"></div>
-                    </div>
-                    <div class="panel-item">
-                        <span class="panel-label">Sound</span>
-                        <div class="toggle-switch" id="soundToggle"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Taskbar -->
     <div class="taskbar">
         <button class="taskbar-icon" id="historyBtn" title="Chat History">📋</button>
         <button class="taskbar-icon" title="Menu">⚙️</button>
         <button class="taskbar-icon" title="Notifications">🔔</button>
     </div>
 
-    <!-- Settings Modal -->
     <div class="modal-overlay" id="settingsModal">
         <div class="modal">
             <div class="modal-header">
@@ -999,52 +928,17 @@
                 <button class="modal-close" id="closeSettings">✕</button>
             </div>
             <div class="modal-content">
-                <div style="margin-bottom: 20px; color: #ffffff;">
-                    <h3 style="font-size: 14px; margin-bottom: 8px; color: #ffffff;">API Configuration</h3>
-                    <input 
-                        type="text" 
-                        id="apiKeyInput" 
-                        placeholder="OpenAI API Key (optional)"
-                        style="width:  100%; padding: 10px 12px; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: 8px; color: #ffffff; font-size:  13px; margin-bottom: 8px;"
-                    >
-                    <input 
-                        type="text" 
-                        id="apiUrlInput" 
-                        placeholder="API Endpoint"
-                        value="http://localhost:3000/api/chat"
-                        style="width: 100%; padding: 10px 12px; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: 8px; color: #ffffff; font-size: 13px;"
-                    >
-                </div>
-
-                <div style="margin-bottom: 20px; color: #ffffff;">
-                    <h3 style="font-size: 14px; margin-bottom: 8px; color: #ffffff;">Display</h3>
-                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 10px; color: #ffffff;">
-                        <input type="checkbox" id="compactMode" style="cursor: pointer;">
-                        <span style="font-size: 14px; color: #ffffff;">Compact mode</span>
-                    </label>
-                    <label style="display: flex; align-items:  center; gap: 10px; cursor: pointer; color: #ffffff;">
-                        <input type="checkbox" id="wrapText" checked style="cursor: pointer;">
-                        <span style="font-size: 14px; color: #ffffff;">Wrap text</span>
-                    </label>
-                </div>
-
-                <div style="color: #ffffff;">
-                    <h3 style="font-size: 14px; margin-bottom: 8px; color: #ffffff;">About</h3>
-                    <p style="font-size: 13px; color: #ffffff; line-height: 1.5;">
-                        Browser OS AI Chat v1.0<br>
-                        Connected to OpenAI API<br>
-                        Current timestamp: <span id="timestamp">--: --: --</span>
-                    </p>
-                </div>
+                <h3 style="color: #ffffff; margin-bottom: 10px;">API Configuration</h3>
+                <input type="text" id="apiUrlInput" placeholder="API Endpoint" value="http://localhost:3000/api/chat"
+                    style="width: 100%; padding: 10px; margin-bottom: 10px; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: 8px; color: #ffffff;">
             </div>
             <div class="modal-footer">
-                <button class="modal-btn secondary" id="resetSettings">Reset</button>
+                <button class="modal-btn secondary" id="closeSettingsBtn">Close</button>
                 <button class="modal-btn primary" id="saveSettings">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- History Modal -->
     <div class="modal-overlay" id="historyModal">
         <div class="modal">
             <div class="modal-header">
@@ -1057,21 +951,15 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="modal-btn secondary" id="clearHistoryBtn">Clear History</button>
+                <button class="modal-btn secondary" id="clearHistoryBtn">Clear</button>
                 <button class="modal-btn primary" id="closeHistoryBtn">Close</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ============================================
-        // Configuration & State Management
-        // ============================================
         const CONFIG = {
-            API_URL: 'http://localhost:3000/api/chat',
-            MAX_RETRIES: 3,
-            TIMEOUT: 30000,
-            DEBOUNCE_DELAY: 300
+            API_URL: 'http://localhost:3000/api/chat'
         };
 
         const STATE = {
@@ -1079,13 +967,9 @@
             messages: [],
             messageCount: 0,
             autoScroll: true,
-            hasError: false,
             chatHistory: []
         };
 
-        // ============================================
-        // DOM Elements
-        // ============================================
         const elements = {
             searchInput: document.getElementById('searchInput'),
             searchBtn: document.getElementById('searchBtn'),
@@ -1094,95 +978,23 @@
             messagesArea: document.getElementById('messagesArea'),
             newChatBtn: document.getElementById('newChatBtn'),
             settingsBtn: document.getElementById('settingsBtn'),
-            themeBtn: document.getElementById('themeBtn'),
             historyBtn: document.getElementById('historyBtn'),
             settingsModal: document.getElementById('settingsModal'),
             historyModal: document.getElementById('historyModal'),
-            closeSettings: document.getElementById('closeSettings'),
-            closeHistory: document. getElementById('closeHistory'),
+            closeSettings: document. getElementById('closeSettings'),
+            closeSettingsBtn: document.getElementById('closeSettingsBtn'),
+            closeHistory: document.getElementById('closeHistory'),
             saveSettings: document.getElementById('saveSettings'),
-            resetSettings: document. getElementById('resetSettings'),
-            clearHistoryBtn: document.getElementById('clearHistoryBtn'),
-            closeHistoryBtn: document.getElementById('closeHistoryBtn'),
-            apiKeyInput: document.getElementById('apiKeyInput'),
+            clearHistoryBtn:  document.getElementById('clearHistoryBtn'),
+            closeHistoryBtn:  document.getElementById('closeHistoryBtn'),
             apiUrlInput: document.getElementById('apiUrlInput'),
-            autoScrollToggle: document.getElementById('autoScrollToggle'),
-            animToggle: document.getElementById('animToggle'),
-            soundToggle: document.getElementById('soundToggle'),
             messageCount: document.getElementById('messageCount'),
-            apiStatus: document. getElementById('apiStatus'),
-            timestamp: document.getElementById('timestamp'),
             historyList: document.getElementById('historyList')
         };
 
-        // ============================================
-        // Utility Functions
-        // ============================================
-        function debounce(func, delay) {
-            let timeoutId;
-            return function(... args) {
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(() => func.apply(this, args), delay);
-            };
-        }
-
-        function formatTimestamp() {
-            const now = new Date();
-            return now.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-        }
-
-        function updateTimestamp() {
-            elements.timestamp.textContent = formatTimestamp();
-        }
-
-        function autoResizeTextarea(textarea) {
-            textarea.style.height = 'auto';
-            const newHeight = Math.min(textarea.scrollHeight, 100);
-            textarea.style.height = newHeight + 'px';
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function generateId() {
-            return Math.random().toString(36).substr(2, 9);
-        }
-
-        function playNotificationSound() {
-            if (! STATE.soundEnabled) return;
-            
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode. connect(audioContext.destination);
-            
-            oscillator.frequency. value = 800;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator. start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-
-        // ============================================
-        // Message Handling
-        // ============================================
         function addMessage(text, sender = 'user', isLoading = false) {
-            const messageId = generateId();
             const messageEl = document.createElement('div');
             messageEl.className = `message ${sender}`;
-            messageEl.id = `message-${messageId}`;
 
             if (isLoading) {
                 messageEl.innerHTML = `
@@ -1198,179 +1010,25 @@
             } else {
                 messageEl.innerHTML = `
                     ${sender === 'user' ? '' : '<div class="message-avatar">🤖</div>'}
-                    <div class="message-content">${escapeHtml(text)}</div>
+                    <div class="message-content">${text}</div>
                     ${sender === 'user' ? '<div class="message-avatar">👤</div>' : ''}
                 `;
             }
 
             const emptyState = elements.messagesArea.querySelector('.empty-state');
-            if (emptyState) {
-                emptyState. remove();
-            }
+            if (emptyState) emptyState.remove();
 
             elements.messagesArea.appendChild(messageEl);
-
-            if (STATE.autoScroll) {
-                scrollToBottom();
-            }
-
-            return messageId;
+            elements.messagesArea.scrollTop = elements. messagesArea.scrollHeight;
+            return messageEl;
         }
 
-        function updateMessage(messageId, text, isLoading = false) {
-            const messageEl = document.getElementById(`message-${messageId}`);
-            if (!messageEl) return;
-
-            if (isLoading) {
-                messageEl.innerHTML = `
-                    <div class="message-avatar">🤖</div>
-                    <div class="message-content">
-                        <div class="loading-spinner">
-                            <div class="loading-dot"></div>
-                            <div class="loading-dot"></div>
-                            <div class="loading-dot"></div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                messageEl.querySelector('.message-content').textContent = text;
-            }
-        }
-
-        function scrollToBottom() {
-            setTimeout(() => {
-                elements.messagesArea.scrollTop = elements.messagesArea.scrollHeight;
-            }, 0);
-        }
-
-        // ============================================
-        // Chat History Management
-        // ============================================
-        function addToHistory(userMessage, aiResponse) {
-            const historyItem = {
-                id: generateId(),
-                userMessage: userMessage,
-                aiResponse: aiResponse,
-                timestamp: new Date(),
-                timeString: new Date().toLocaleString('fr-FR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour:  '2-digit',
-                    minute: '2-digit'
-                })
-            };
-
-            STATE.chatHistory.unshift(historyItem);
-
-            if (STATE.chatHistory. length > 100) {
-                STATE.chatHistory.pop();
-            }
-
-            localStorage.setItem('chatHistory', JSON.stringify(STATE.chatHistory));
-            updateHistoryDisplay();
-        }
-
-        function loadChatHistory() {
-            const saved = localStorage.getItem('chatHistory');
-            if (saved) {
-                STATE.chatHistory = JSON.parse(saved);
-            }
-        }
-
-        function updateHistoryDisplay() {
-            const historyList = elements.historyList;
-            historyList.innerHTML = '';
-
-            if (STATE.chatHistory.length === 0) {
-                historyList.innerHTML = '<div class="empty-history">No chat history yet</div>';
-                return;
-            }
-
-            STATE.chatHistory.forEach((item) => {
-                const historyEl = document.createElement('div');
-                historyEl.className = 'history-item';
-
-                const previewText = item.userMessage.substring(0, 40);
-                const displayText = item.userMessage.length > 40 ? previewText + '...' : previewText;
-
-                historyEl.innerHTML = `
-                    <div class="history-item-icon">💬</div>
-                    <div class="history-item-text">${escapeHtml(displayText)}</div>
-                    <div class="history-item-time">${item.timeString}</div>
-                `;
-
-                historyEl.addEventListener('click', () => {
-                    elements.chatInput.value = item.userMessage;
-                    autoResizeTextarea(elements.chatInput);
-                    closeHistoryModal();
-                    elements.chatInput.focus();
-                });
-
-                historyList.appendChild(historyEl);
-            });
-        }
-
-        // ============================================
-        // API Communication
-        // ============================================
-        async function sendToAPI(message, retryCount = 0) {
-            try {
-                STATE.hasError = false;
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT);
-
-                const response = await fetch(CONFIG.API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: message,
-                        apiKey: elements.apiKeyInput.value || undefined
-                    }),
-                    signal:  controller.signal
-                });
-
-                clearTimeout(timeoutId);
-
-                if (!response.ok) {
-                    if (response.status === 429 && retryCount < CONFIG.MAX_RETRIES) {
-                        const delay = Math.pow(2, retryCount) * 1000;
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        return sendToAPI(message, retryCount + 1);
-                    }
-
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.error || `API error:  ${response.status}`);
-                }
-
-                const data = await response.json();
-                return data. response || data. message || 'No response received';
-
-            } catch (error) {
-                STATE.hasError = true;
-                if (error. name === 'AbortError') {
-                    throw new Error('Request timeout.  Please try again.');
-                }
-                throw error;
-            }
-        }
-
-        // ============================================
-        // Chat Functionality
-        // ============================================
         async function handleSendMessage(text = null) {
-            const messageText = text || elements.chatInput. value. trim() || elements.searchInput.value. trim();
-
+            const messageText = text || elements.chatInput. value.trim() || elements.searchInput.value.trim();
             if (!messageText) return;
 
             elements.chatInput.value = '';
-            elements.searchInput.value = '';
-            autoResizeTextarea(elements.chatInput);
-
-            elements.apiStatus.textContent = 'Connecting...';
-            elements.apiStatus.style.color = 'var(--warning-color)';
+            elements.searchInput. value = '';
 
             addMessage(messageText, 'user');
             STATE.messages.push({ role: 'user', content: messageText });
@@ -1378,266 +1036,106 @@
             elements.messageCount.textContent = STATE.messageCount;
 
             STATE.isLoading = true;
-            updateUIState();
-            const loadingMessageId = addMessage('', 'assistant', true);
+            const loadingEl = addMessage('', 'assistant', true);
 
             try {
-                const response = await sendToAPI(messageText);
+                const response = await fetch(CONFIG.API_URL, {
+                    method: 'POST',
+                    headers:  { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: messageText })
+                });
 
-                updateMessage(loadingMessageId, response);
-                STATE.messages.push({ role: 'assistant', content: response });
+                const data = await response.json();
+                const aiResponse = data.message || 'No response';
 
-                addToHistory(messageText, response);
+                loadingEl.remove();
+                addMessage(aiResponse, 'assistant');
 
-                elements.apiStatus.textContent = 'Connected';
-                elements.apiStatus. style.color = 'var(--success-color)';
+                STATE.chatHistory.unshift({
+                    user: messageText,
+                    ai: aiResponse,
+                    time: new Date().toLocaleString()
+                });
 
-                playNotificationSound();
+                if (STATE.chatHistory.length > 50) STATE.chatHistory.pop();
+                localStorage.setItem('chatHistory', JSON.stringify(STATE. chatHistory));
 
             } catch (error) {
-                console.error('Error:', error);
-                const errorMessage = `Error:  ${error.message}`;
-                updateMessage(loadingMessageId, errorMessage);
-
-                elements.apiStatus.textContent = 'Error';
-                elements.apiStatus. style.color = 'var(--error-color)';
-
-                STATE.messages.push({ role: 'assistant', content: errorMessage, isError: true });
-
-                showNotification(`Failed to send message: ${error.message}`, 'error');
-
-            } finally {
-                STATE.isLoading = false;
-                updateUIState();
-            }
-        }
-
-        function updateUIState() {
-            elements.sendBtn.disabled = STATE.isLoading;
-            elements.searchBtn.disabled = STATE.isLoading;
-            elements.chatInput.disabled = STATE.isLoading;
-            elements.searchInput. disabled = STATE.isLoading;
-
-            if (STATE.isLoading) {
-                elements. sendBtn.classList.add('loading');
-                elements.searchBtn. classList.add('loading');
-            } else {
-                elements.sendBtn.classList.remove('loading');
-                elements.searchBtn.classList.remove('loading');
-            }
-        }
-
-        function showNotification(message, type = 'info') {
-            const notificationEl = document.createElement('div');
-            notificationEl.className = `${type}-message`;
-            notificationEl.textContent = message;
-            notificationEl.style.position = 'fixed';
-            notificationEl.style.bottom = '100px';
-            notificationEl. style.right = '20px';
-            notificationEl.style. zIndex = '2000';
-            notificationEl. style.maxWidth = '300px';
-
-            document.body.appendChild(notificationEl);
-
-            setTimeout(() => {
-                notificationEl.style.opacity = '0';
-                notificationEl.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => notificationEl.remove(), 300);
-            }, 3000);
-        }
-
-        // ============================================
-        // Modal Management
-        // ============================================
-        function openSettingsModal() {
-            elements.settingsModal.classList.add('active');
-        }
-
-        function closeSettingsModal() {
-            elements.settingsModal.classList.remove('active');
-        }
-
-        function openHistoryModal() {
-            updateHistoryDisplay();
-            elements. historyModal.classList.add('active');
-            elements.historyBtn.classList.add('active');
-        }
-
-        function closeHistoryModal() {
-            elements.historyModal.classList.remove('active');
-            elements.historyBtn.classList.remove('active');
-        }
-
-        function saveSettings() {
-            CONFIG.API_URL = elements.apiUrlInput.value || CONFIG.API_URL;
-            localStorage.setItem('apiUrl', CONFIG.API_URL);
-            localStorage.setItem('apiKey', elements.apiKeyInput.value);
-            showNotification('Settings saved successfully', 'success');
-            closeSettingsModal();
-        }
-
-        function resetSettings() {
-            CONFIG.API_URL = 'http://localhost:3000/api/chat';
-            elements.apiUrlInput.value = CONFIG.API_URL;
-            elements.apiKeyInput.value = '';
-            localStorage.removeItem('apiUrl');
-            localStorage.removeItem('apiKey');
-            showNotification('Settings reset to defaults', 'success');
-        }
-
-        function loadSettings() {
-            const savedUrl = localStorage.getItem('apiUrl');
-            const savedKey = localStorage.getItem('apiKey');
-
-            if (savedUrl) {
-                CONFIG.API_URL = savedUrl;
-                elements. apiUrlInput.value = savedUrl;
+                loadingEl.querySelector('.message-content').textContent = '❌ Erreur:  ' + error.message;
             }
 
-            if (savedKey) {
-                elements. apiKeyInput.value = savedKey;
-            }
+            STATE.isLoading = false;
         }
 
-        // ============================================
-        // Theme Toggle
-        // ============================================
-        function toggleTheme() {
-            document. documentElement.style.colorScheme = 
-                document.documentElement.style.colorScheme === 'dark' ?  'light' : 'dark';
-            
-            if (document.documentElement.style. colorScheme === 'light') {
-                document.documentElement.style.setProperty('--bg-primary', '#f8fafc');
-                document.documentElement.style.setProperty('--bg-secondary', '#f1f5f9');
-                document.documentElement.style.setProperty('--bg-tertiary', '#e2e8f0');
-                document.documentElement.style.setProperty('--text-primary', '#ffffff');
-                document.documentElement. style.setProperty('--text-secondary', '#ffffff');
-                document.documentElement. style.setProperty('--glass-bg', 'rgba(248, 250, 252, 0.8)');
-                document.documentElement.style.setProperty('--glass-border', 'rgba(51, 65, 85, 0.2)');
-                elements.themeBtn.textContent = '☀️';
-            } else {
-                document.documentElement.style.setProperty('--bg-primary', '#0f172a');
-                document. documentElement.style.setProperty('--bg-secondary', '#1e293b');
-                document. documentElement.style.setProperty('--bg-tertiary', '#334155');
-                document.documentElement.style.setProperty('--text-primary', '#ffffff');
-                document.documentElement.style.setProperty('--text-secondary', '#ffffff');
-                document.documentElement.style.setProperty('--glass-bg', 'rgba(15, 23, 42, 0.8)');
-                document.documentElement.style.setProperty('--glass-border', 'rgba(148, 163, 184, 0.3)');
-                elements.themeBtn.textContent = '🌙';
+        function updateHistoryDisplay() {
+            const historyList = elements.historyList;
+            historyList.innerHTML = '';
+
+            if (STATE.chatHistory.length === 0) {
+                historyList.innerHTML = '<div class="empty-history">No chat history</div>';
+                return;
             }
+
+            STATE.chatHistory. forEach((item) => {
+                const historyEl = document.createElement('div');
+                historyEl.className = 'history-item';
+                historyEl.innerHTML = `
+                    <div class="history-item-icon">💬</div>
+                    <div class="history-item-text">${item.user. substring(0, 40)}</div>
+                    <div class="history-item-time">${item.time}</div>
+                `;
+                historyEl.addEventListener('click', () => {
+                    elements.chatInput.value = item.user;
+                    closeHistoryModal();
+                });
+                historyList.appendChild(historyEl);
+            });
         }
 
-        // ============================================
         // Event Listeners
-        // ============================================
         elements.sendBtn.addEventListener('click', () => handleSendMessage());
         elements.searchBtn.addEventListener('click', () => handleSendMessage());
-
         elements.chatInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && !STATE.isLoading) {
                 e.preventDefault();
                 handleSendMessage();
             }
         });
-
-        elements.chatInput.addEventListener('input', (e) => {
-            autoResizeTextarea(e.target);
-        });
-
-        elements.searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !STATE.isLoading) {
-                e.preventDefault();
-                handleSendMessage();
-            }
-        });
-
         elements.newChatBtn.addEventListener('click', () => {
             STATE.messages = [];
             elements.messagesArea.innerHTML = `
                 <div class="empty-state">
                     <div class="empty-state-icon">💬</div>
-                    <div class="empty-state-text">New Chat Started</div>
-                    <div class="empty-state-subtext">Start a conversation by asking a question</div>
+                    <div class="empty-state-text">New Chat</div>
                 </div>
             `;
-            showNotification('New chat created', 'success');
         });
 
-        elements. settingsBtn.addEventListener('click', openSettingsModal);
-        elements.closeSettings.addEventListener('click', closeSettingsModal);
-        elements.saveSettings.addEventListener('click', saveSettings);
-        elements.resetSettings. addEventListener('click', resetSettings);
-        elements.themeBtn.addEventListener('click', toggleTheme);
+        elements.settingsBtn.addEventListener('click', () => elements.settingsModal.classList.add('active'));
+        elements.closeSettings.addEventListener('click', () => elements.settingsModal.classList.remove('active'));
+        elements.closeSettingsBtn.addEventListener('click', () => elements.settingsModal.classList.remove('active'));
+        elements.saveSettings.addEventListener('click', () => {
+            CONFIG.API_URL = elements.apiUrlInput.value;
+            localStorage.setItem('apiUrl', CONFIG.API_URL);
+            elements.settingsModal.classList.remove('active');
+        });
 
-        elements.historyBtn.addEventListener('click', openHistoryModal);
-        elements.closeHistory.addEventListener('click', closeHistoryModal);
-        elements.closeHistoryBtn.addEventListener('click', closeHistoryModal);
+        elements.historyBtn.addEventListener('click', () => {
+            updateHistoryDisplay();
+            elements.historyModal.classList. add('active');
+        });
+        elements.closeHistory.addEventListener('click', () => elements.historyModal.classList.remove('active'));
+        elements.closeHistoryBtn.addEventListener('click', () => elements.historyModal.classList.remove('active'));
         elements.clearHistoryBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to clear all chat history?')) {
-                STATE.chatHistory = [];
-                localStorage.removeItem('chatHistory');
-                updateHistoryDisplay();
-                showNotification('Chat history cleared', 'success');
-            }
+            STATE.chatHistory = [];
+            localStorage.removeItem('chatHistory');
+            updateHistoryDisplay();
         });
 
-        elements.settingsModal.addEventListener('click', (e) => {
-            if (e.target === elements.settingsModal) {
-                closeSettingsModal();
-            }
-        });
-
-        elements.historyModal.addEventListener('click', (e) => {
-            if (e.target === elements. historyModal) {
-                closeHistoryModal();
-            }
-        });
-
-        // Toggle switches
-        elements.autoScrollToggle.addEventListener('click', function() {
-            STATE.autoScroll = !STATE.autoScroll;
-            this.classList.toggle('active');
-            localStorage.setItem('autoScroll', STATE.autoScroll);
-        });
-
-        elements.animToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.body.style.animation = this.classList.contains('active') ? '' : 'none';
-        });
-
-        elements.soundToggle.addEventListener('click', function() {
-            STATE.soundEnabled = !STATE.soundEnabled;
-            this.classList. toggle('active');
-            localStorage. setItem('soundEnabled', STATE. soundEnabled);
-        });
-
-        // ============================================
-        // Initialization
-        // ============================================
-        function initialize() {
-            loadSettings();
-            loadChatHistory();
-
-            STATE.autoScroll = localStorage.getItem('autoScroll') !== 'false';
-            STATE.soundEnabled = localStorage.getItem('soundEnabled') === 'true';
-
-            if (! STATE.autoScroll) elements.autoScrollToggle.classList. remove('active');
-            if (STATE.soundEnabled) elements.soundToggle.classList.add('active');
-
-            updateTimestamp();
-            setInterval(updateTimestamp, 1000);
-
-            updateUIState();
-
-            console.log('Browser OS AI Chat initialized');
-            console.log('API Endpoint:', CONFIG.API_URL);
-        }
-
-        if (document.readyState === 'loading') {
-            document. addEventListener('DOMContentLoaded', initialize);
-        } else {
-            initialize();
-        }
+        // Init
+        STATE.chatHistory = JSON.parse(localStorage. getItem('chatHistory')) || [];
+        CONFIG.API_URL = localStorage.getItem('apiUrl') || CONFIG.API_URL;
+        elements.apiUrlInput.value = CONFIG.API_URL;
     </script>
 </body>
 </html>
