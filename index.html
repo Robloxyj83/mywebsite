@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Mon Hub Pro avec Copilot</title>
+<title>AlteOS Hub ULTIMATE</title>
 
 <!-- Google Sans + Material Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -129,7 +129,7 @@
 
     .main {
         display: grid;
-        grid-template-columns: 260px 1fr 300px;
+        grid-template-columns: 260px 1fr 320px;
         gap: 16px;
     }
 
@@ -406,303 +406,6 @@
         background: rgba(22,163,74,1);
     }
 
-    /* Notifications center */
-    .notifications-panel {
-        position: absolute;
-        top: 60px;
-        right: 30px;
-        width: 280px;
-        max-height: 320px;
-        background: rgba(15,23,42,0.98);
-        border-radius: 16px;
-        border: 1px solid rgba(148,163,184,0.6);
-        padding: 10px;
-        display: none;
-        flex-direction: column;
-        gap: 8px;
-        overflow-y: auto;
-        z-index: 20;
-    }
-
-    body.light .notifications-panel {
-        background: rgba(248,250,252,0.98);
-        border-color: rgba(148,163,184,0.9);
-    }
-
-    .notification-item {
-        font-size: 12px;
-        padding: 6px 8px;
-        border-radius: 8px;
-        background: rgba(15,23,42,0.9);
-        border: 1px solid rgba(148,163,184,0.5);
-    }
-
-    body.light .notification-item {
-        background: rgba(241,245,249,0.98);
-        border-color: rgba(148,163,184,0.8);
-    }
-
-    .notification-title {
-        font-weight: 600;
-        margin-bottom: 2px;
-        font-size: 12px;
-    }
-
-    .notification-time {
-        font-size: 10px;
-        color: #9ca3af;
-    }
-
-    body.light .notification-time {
-        color: #6b7280;
-    }
-
-    /* Modales (calculatrice, todo) */
-    .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(15,23,42,0.6);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 30;
-    }
-
-    .modal {
-        width: 320px;
-        max-width: 90vw;
-        background: rgba(15,23,42,0.98);
-        border-radius: 16px;
-        border: 1px solid rgba(148,163,184,0.7);
-        padding: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    body.light .modal {
-        background: rgba(248,250,252,0.98);
-        border-color: rgba(148,163,184,0.9);
-    }
-
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .modal-close {
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .calc-display {
-        background: rgba(15,23,42,0.9);
-        border-radius: 10px;
-        border: 1px solid rgba(148,163,184,0.6);
-        padding: 8px;
-        text-align: right;
-        font-size: 18px;
-        min-height: 32px;
-        overflow-x: auto;
-    }
-
-    body.light .calc-display {
-        background: rgba(241,245,249,0.98);
-        border-color: rgba(148,163,184,0.8);
-    }
-
-    .calc-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
-    }
-
-    .calc-btn {
-        padding: 8px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        background: rgba(30,64,175,0.9);
-        color: white;
-    }
-
-    .calc-btn.op {
-        background: rgba(37,99,235,0.9);
-    }
-
-    .calc-btn.eq {
-        background: rgba(22,163,74,0.9);
-    }
-
-    .calc-btn.clear {
-        background: rgba(220,38,38,0.9);
-    }
-
-    .calc-btn:hover {
-        filter: brightness(1.1);
-    }
-
-    .todo-list {
-        max-height: 200px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .todo-item {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 13px;
-        padding: 4px 6px;
-        border-radius: 8px;
-        background: rgba(15,23,42,0.9);
-        border: 1px solid rgba(148,163,184,0.6);
-    }
-
-    body.light .todo-item {
-        background: rgba(241,245,249,0.98);
-        border-color: rgba(148,163,184,0.8);
-    }
-
-    .todo-item input[type="checkbox"] {
-        cursor: pointer;
-    }
-
-    .todo-item span.done {
-        text-decoration: line-through;
-        opacity: 0.6;
-    }
-
-    .todo-input-row {
-        display: flex;
-        gap: 6px;
-        margin-top: 4px;
-    }
-
-    .todo-input-row input {
-        flex: 1;
-        background: rgba(15,23,42,0.9);
-        border-radius: 8px;
-        border: 1px solid rgba(148,163,184,0.6);
-        padding: 5px 8px;
-        color: inherit;
-        font-size: 12px;
-        outline: none;
-    }
-
-    body.light .todo-input-row input {
-        background: rgba(241,245,249,0.98);
-        border-color: rgba(148,163,184,0.8);
-    }
-
-    .todo-input-row button {
-        border-radius: 999px;
-        border: none;
-        padding: 5px 10px;
-        font-size: 12px;
-        cursor: pointer;
-        background: rgba(59,130,246,0.9);
-        color: white;
-    }
-
-    .todo-input-row button:hover {
-        background: rgba(37,99,235,1);
-    }
-
-    /* Timer */
-    .timer-box {
-        margin-top: 8px;
-        padding: 8px;
-        border-radius: 10px;
-        border: 1px solid rgba(148,163,184,0.5);
-        background: rgba(15,23,42,0.9);
-        font-size: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    body.light .timer-box {
-        background: rgba(241,245,249,0.98);
-        border-color: rgba(148,163,184,0.8);
-    }
-
-    .timer-row {
-        display: flex;
-        gap: 6px;
-        align-items: center;
-    }
-
-    .timer-row input {
-        flex: 1;
-        background: transparent;
-        border-radius: 8px;
-        border: 1px solid rgba(148,163,184,0.6);
-        padding: 4px 6px;
-        color: inherit;
-        font-size: 12px;
-        outline: none;
-    }
-
-    .timer-row button {
-        border-radius: 999px;
-        border: none;
-        padding: 4px 8px;
-        font-size: 12px;
-        cursor: pointer;
-        background: rgba(34,197,94,0.9);
-        color: white;
-    }
-
-    .timer-display {
-        font-size: 13px;
-    }
-
-    /* Pomodoro */
-    .pomodoro-box {
-        margin-top: 8px;
-        padding: 8px;
-        border-radius: 10px;
-        border: 1px solid rgba(148,163,184,0.5);
-        background: rgba(15,23,42,0.9);
-        font-size: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    body.light .pomodoro-box {
-        background: rgba(241,245,249,0.98);
-        border-color: rgba(148,163,184,0.8);
-    }
-
-    .pomodoro-row {
-        display: flex;
-        gap: 6px;
-        align-items: center;
-    }
-
-    .pomodoro-row button {
-        border-radius: 999px;
-        border: none;
-        padding: 4px 8px;
-        font-size: 12px;
-        cursor: pointer;
-        background: rgba(59,130,246,0.9);
-        color: white;
-    }
-
-    .pomodoro-display {
-        font-size: 13px;
-    }
-
-    /* Quick links & history */
     .mini-list {
         margin-top: 6px;
         max-height: 120px;
@@ -768,6 +471,94 @@
         color: #9ca3af;
     }
 
+    .timer-box {
+        margin-top: 8px;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid rgba(148,163,184,0.5);
+        background: rgba(15,23,42,0.9);
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    body.light .timer-box {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .timer-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .timer-row input,
+    .timer-box textarea,
+    .timer-box select {
+        flex: 1;
+        background: transparent;
+        border-radius: 8px;
+        border: 1px solid rgba(148,163,184,0.6);
+        padding: 4px 6px;
+        color: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+
+    .timer-row button,
+    .timer-box button {
+        border-radius: 999px;
+        border: none;
+        padding: 4px 8px;
+        font-size: 12px;
+        cursor: pointer;
+        background: rgba(34,197,94,0.9);
+        color: white;
+    }
+
+    .timer-display {
+        font-size: 13px;
+    }
+
+    .pomodoro-box {
+        margin-top: 8px;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid rgba(148,163,184,0.5);
+        background: rgba(15,23,42,0.9);
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    body.light .pomodoro-box {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .pomodoro-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .pomodoro-row button {
+        border-radius: 999px;
+        border: none;
+        padding: 4px 8px;
+        font-size: 12px;
+        cursor: pointer;
+        background: rgba(59,130,246,0.9);
+        color: white;
+    }
+
+    .pomodoro-display {
+        font-size: 13px;
+    }
+
     @media (max-width: 980px) {
         .main {
             grid-template-columns: 1fr;
@@ -793,19 +584,11 @@
             <div class="pill pill-button" id="themeToggle">
                 <span class="material-symbols-rounded">dark_mode</span>
             </div>
-            <div class="pill pill-button" id="notifToggle">
-                <span class="material-symbols-rounded">notifications</span>
-            </div>
             <div class="pill" id="weatherSmall">
                 <span id="weatherIconSmall">🌥️</span>
                 <span id="weatherTempSmall">--°C</span>
             </div>
         </div>
-    </div>
-
-    <div id="notificationsPanel" class="notifications-panel">
-        <div class="card-title" style="font-size:14px;">Notifications</div>
-        <div id="notificationsList"></div>
     </div>
 
     <div class="main">
@@ -890,6 +673,7 @@
             </div>
             <div id="quickLinksList" class="mini-list"></div>
 
+            <!-- Timer -->
             <div class="timer-box">
                 <div><strong>Timer rapide</strong></div>
                 <div class="timer-row">
@@ -899,64 +683,127 @@
                 <div class="timer-display" id="timerDisplay">Aucun timer en cours.</div>
             </div>
 
+            <!-- Pomodoro -->
             <div class="pomodoro-box">
                 <div><strong>Pomodoro</strong> (25 travail / 5 pause)</div>
                 <div class="pomodoro-row">
-                    <button onclick="startPomodoroWork()">Start travail</button>
-                    <button onclick="startPomodoroBreak()">Start pause</button>
+                    <button onclick="startPomodoroWork()">Travail</button>
+                    <button onclick="startPomodoroBreak()">Pause</button>
                     <button onclick="resetPomodoro()">Reset</button>
                 </div>
                 <div class="pomodoro-display" id="pomodoroDisplay">Pomodoro inactif.</div>
             </div>
+
+            <!-- Chronomètre -->
+            <div class="timer-box">
+                <div><strong>Chronomètre</strong></div>
+                <div id="chronoDisplay">00:00.00</div>
+                <div class="timer-row">
+                    <button onclick="chronoStart()">Start</button>
+                    <button onclick="chronoStop()">Stop</button>
+                    <button onclick="chronoReset()">Reset</button>
+                </div>
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="timer-box">
+                <div><strong>Mot de passe</strong></div>
+                <div class="timer-row">
+                    <input id="pwdLength" type="number" min="4" max="40" placeholder="Longueur">
+                    <button onclick="generatePassword()">Générer</button>
+                </div>
+                <div id="pwdOutput" class="timer-display"></div>
+            </div>
+
+            <!-- Température -->
+            <div class="timer-box">
+                <div><strong>Température</strong></div>
+                <div class="timer-row">
+                    <input id="tempInput" placeholder="20C ou 70F">
+                    <button onclick="convertTemp()">Convertir</button>
+                </div>
+                <div id="tempOutput" class="timer-display"></div>
+            </div>
+
+            <!-- Générateur de noms -->
+            <div class="timer-box">
+                <div><strong>Générateur de noms</strong></div>
+                <button onclick="generateName()">Générer un nom</button>
+                <div id="nameOutput" class="timer-display"></div>
+            </div>
+
+            <!-- Audio -->
+            <div class="timer-box">
+                <div><strong>Lecteur audio</strong></div>
+                <input type="file" id="audioFile" accept="audio/*" onchange="loadAudio()">
+                <audio id="audioPlayer" controls style="width:100%; margin-top:6px;"></audio>
+            </div>
+
+            <!-- Vidéo -->
+            <div class="timer-box">
+                <div><strong>Lecteur vidéo</strong></div>
+                <input type="file" id="videoFile" accept="video/*" onchange="loadVideo()">
+                <video id="videoPlayer" controls style="width:100%; margin-top:6px;"></video>
+            </div>
+
+            <!-- QR Code -->
+            <div class="timer-box">
+                <div><strong>QR Code</strong></div>
+                <div class="timer-row">
+                    <input id="qrInput" placeholder="Texte ou URL">
+                    <button onclick="generateQR()">QR</button>
+                </div>
+                <img id="qrImage" style="margin-top:6px; width:120px;">
+            </div>
+
+            <!-- RSS -->
+            <div class="timer-box">
+                <div><strong>Flux RSS</strong></div>
+                <div class="timer-row">
+                    <input id="rssUrl" placeholder="URL RSS">
+                    <button onclick="loadRSS()">Go</button>
+                </div>
+                <div id="rssList" class="mini-list"></div>
+            </div>
+
+            <!-- Devises -->
+            <div class="timer-box">
+                <div><strong>Devises</strong></div>
+                <div class="timer-row">
+                    <input id="curAmount" placeholder="Montant">
+                    <select id="curFrom">
+                        <option>CAD</option>
+                        <option>USD</option>
+                        <option>EUR</option>
+                        <option>MAD</option>
+                    </select>
+                    <select id="curTo">
+                        <option>USD</option>
+                        <option>CAD</option>
+                        <option>EUR</option>
+                        <option>MAD</option>
+                    </select>
+                </div>
+                <button onclick="convertCurrency()">Convertir</button>
+                <div id="curOutput" class="timer-display"></div>
+            </div>
+
+            <!-- Traduction -->
+            <div class="timer-box">
+                <div><strong>Traduction</strong></div>
+                <textarea id="tradInput" placeholder="Texte à traduire"></textarea>
+                <div class="timer-row">
+                    <select id="tradLang">
+                        <option value="en">Anglais</option>
+                        <option value="fr">Français</option>
+                    </select>
+                    <button onclick="translateText()">Traduire</button>
+                </div>
+                <div id="tradOutput" class="timer-display"></div>
+            </div>
+
         </div>
 
-    </div>
-</div>
-
-<!-- Modale Calculatrice -->
-<div id="calcModalBackdrop" class="modal-backdrop">
-    <div class="modal">
-        <div class="modal-header">
-            <span>Calculatrice</span>
-            <span class="modal-close" onclick="closeCalc()">&times;</span>
-        </div>
-        <div id="calcDisplay" class="calc-display">0</div>
-        <div class="calc-grid">
-            <button class="calc-btn clear" onclick="calcClear()">C</button>
-            <button class="calc-btn op" onclick="calcInput('/')">÷</button>
-            <button class="calc-btn op" onclick="calcInput('*')">×</button>
-            <button class="calc-btn op" onclick="calcInput('-')">−</button>
-
-            <button class="calc-btn" onclick="calcInput('7')">7</button>
-            <button class="calc-btn" onclick="calcInput('8')">8</button>
-            <button class="calc-btn" onclick="calcInput('9')">9</button>
-            <button class="calc-btn op" onclick="calcInput('+')">+</button>
-
-            <button class="calc-btn" onclick="calcInput('4')">4</button>
-            <button class="calc-btn" onclick="calcInput('5')">5</button>
-            <button class="calc-btn" onclick="calcInput('6')">6</button>
-            <button class="calc-btn eq" onclick="calcEquals()">=</button>
-
-            <button class="calc-btn" onclick="calcInput('1')">1</button>
-            <button class="calc-btn" onclick="calcInput('2')">2</button>
-            <button class="calc-btn" onclick="calcInput('3')">3</button>
-            <button class="calc-btn" onclick="calcInput('0')">0</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modale To-Do -->
-<div id="todoModalBackdrop" class="modal-backdrop">
-    <div class="modal">
-        <div class="modal-header">
-            <span>Tâches</span>
-            <span class="modal-close" onclick="closeTodo()">&times;</span>
-        </div>
-        <div id="todoList" class="todo-list"></div>
-        <div class="todo-input-row">
-            <input id="todoInput" placeholder="Nouvelle tâche...">
-            <button onclick="addTodo()">Ajouter</button>
-        </div>
     </div>
 </div>
 
@@ -973,7 +820,6 @@ let baseApps = [
     { name: "YouTube Studio", url: "https://studio.youtube.com", icon: "video_settings" },
     { name: "Office", url: "https://www.office.com", icon: "description" },
     { name: "GitHub", url: "https://github.com", icon: "code" },
-    { name: "Commandes", url: "apps/commandes-simple/index.html", icon: "terminal" },
     { name: "Google Drive", url: "https://drive.google.com", icon: "cloud" },
     { name: "Google Docs", url: "https://docs.google.com", icon: "article" },
     { name: "Google Sheets", url: "https://docs.google.com/spreadsheets", icon: "grid_on" },
@@ -993,7 +839,6 @@ let baseApps = [
     { name: "LinkedIn", url: "https://www.linkedin.com", icon: "work" },
     { name: "Spotify", url: "https://open.spotify.com", icon: "music_note" },
     { name: "YouTube Music", url: "https://music.youtube.com", icon: "queue_music" },
-    { name: "Deezer", url: "https://www.deezer.com", icon: "graphic_eq" },
     { name: "Netflix", url: "https://www.netflix.com", icon: "live_tv" },
     { name: "Twitch", url: "https://www.twitch.tv", icon: "sports_esports" },
     { name: "Trello", url: "https://trello.com", icon: "view_kanban" },
@@ -1006,15 +851,12 @@ let baseApps = [
     { name: "Slack", url: "https://slack.com", icon: "chat_bubble" },
     { name: "Pinterest", url: "https://www.pinterest.com", icon: "push_pin" },
     { name: "Reddit", url: "https://www.reddit.com", icon: "forum" },
-    { name: "GitLab", url: "https://gitlab.com", icon: "terminal" },
     { name: "Stack Overflow", url: "https://stackoverflow.com", icon: "help" },
     { name: "CodePen", url: "https://codepen.io", icon: "code_blocks" },
     { name: "Replit", url: "https://replit.com", icon: "code" },
     { name: "OpenAI", url: "https://openai.com", icon: "psychology" },
     { name: "ChatGPT", url: "https://chat.openai.com", icon: "smart_toy" },
-    { name: "Gemini", url: "https://gemini.google.com", icon: "auto_awesome" },
-    { name: "Calculatrice", url: "#calc", icon: "calculate", internal: "calc" },
-    { name: "Tâches", url: "#todo", icon: "checklist", internal: "todo" }
+    { name: "Gemini", url: "https://gemini.google.com", icon: "auto_awesome" }
 ];
 
 let customApps = [];
@@ -1055,28 +897,7 @@ function toggleTheme() {
     applyTheme(next);
 }
 
-/* -------- NOTIFICATIONS -------- */
-function addNotification(title, message) {
-    const list = document.getElementById("notificationsList");
-    const item = document.createElement("div");
-    item.className = "notification-item";
-
-    const t = document.createElement("div");
-    t.className = "notification-title";
-    t.textContent = title;
-
-    const m = document.createElement("div");
-    m.textContent = message;
-
-    const time = document.createElement("div");
-    time.className = "notification-time";
-    time.textContent = new Date().toLocaleTimeString("fr-CA", { hour: "2-digit", minute: "2-digit" });
-
-    item.appendChild(t);
-    item.appendChild(m);
-    item.appendChild(time);
-    list.prepend(item);
-}
+document.getElementById("themeToggle").addEventListener("click", toggleTheme);
 
 /* -------- APPS -------- */
 function loadCustomApps() {
@@ -1136,7 +957,7 @@ function createAppTile(app) {
 function pushRecentApp(app) {
     const key = app.name + "|" + (app.url || "");
     recentApps = recentApps.filter(a => (a.key !== key));
-    recentApps.unshift({ key, name: app.name, url: app.url || "", internal: app.internal || null });
+    recentApps.unshift({ key, name: app.name, url: app.url || "" });
     if (recentApps.length > 8) recentApps.pop();
     localStorage.setItem("hub_recent_apps", JSON.stringify(recentApps));
     renderRecentApps();
@@ -1149,12 +970,7 @@ function renderRecentApps() {
         const item = document.createElement("div");
         item.className = "mini-list-item";
         item.onclick = () => {
-            if (a.internal) {
-                if (a.internal === "calc") openCalc();
-                else if (a.internal === "todo") openTodo();
-            } else if (a.url) {
-                window.open(a.url, "_blank");
-            }
+            if (a.url) window.open(a.url, "_blank");
         };
         const span = document.createElement("span");
         span.textContent = a.name;
@@ -1164,20 +980,7 @@ function renderRecentApps() {
 }
 
 function openApp(app) {
-    if (app.internal === "calc") {
-        openCalc();
-        addNotification("Application", "Calculatrice ouverte.");
-        pushRecentApp(app);
-        return;
-    }
-    if (app.internal === "todo") {
-        openTodo();
-        addNotification("Application", "Tâches ouvertes.");
-        pushRecentApp(app);
-        return;
-    }
     window.open(app.url, "_blank");
-    addNotification("Application", `Ouverture de ${app.name}`);
     pushRecentApp(app);
 }
 
@@ -1220,7 +1023,6 @@ async function updateWeather() {
 function openWeatherDetails() {
     const url = `https://wttr.in/${encodeURIComponent(WEATHER_CITY)}`;
     window.open(url, "_blank");
-    addNotification("Météo", "Ouverture des détails météo.");
 }
 
 function mapWeatherIconFromDesc(desc) {
@@ -1286,7 +1088,6 @@ document.getElementById("searchInput").addEventListener("keydown", function(e) {
             url = "https://www.bing.com/search?q=" + encodeURIComponent(q);
         }
         window.open(url, "_blank");
-        addNotification("Recherche", `Recherche ${engine} : "${q}"`);
         pushSearchHistory(q, engine);
     }
 });
@@ -1328,11 +1129,10 @@ function runCopilot() {
             const current = document.getElementById("notesArea").value;
             document.getElementById("notesArea").value = (current ? current + "\n" : "") + content;
             saveNotes();
-            addNotification("Copilot", "Note ajoutée.");
         }
     } else {
         const url = "https://www.bing.com/search?q=" + encodeURIComponent(text);
-        openApp({ name: "Recherche", url });
+        window.open(url, "_blank");
     }
 }
 
@@ -1357,7 +1157,6 @@ function addCustomApp() {
     customApps.push({ name, url, icon });
     saveCustomApps();
     renderApps();
-    addNotification("Applications", `Nouvelle app ajoutée : ${name}`);
 
     nameEl.value = "";
     urlEl.value = "";
@@ -1389,7 +1188,6 @@ function addQuickLink() {
     quickLinks.push({ name, url });
     saveQuickLinks();
     renderQuickLinks();
-    addNotification("Liens rapides", `Lien ajouté : ${name}`);
     nameEl.value = "";
     urlEl.value = "";
 }
@@ -1432,112 +1230,6 @@ document.getElementById("moreToggle").addEventListener("click", function() {
     }
 });
 
-/* -------- NOTIF PANEL -------- */
-document.getElementById("notifToggle").addEventListener("click", function() {
-    const panel = document.getElementById("notificationsPanel");
-    panel.style.display = (panel.style.display === "flex") ? "none" : "flex";
-});
-
-/* -------- CALCULATRICE -------- */
-let calcBuffer = "0";
-
-function openCalc() {
-    document.getElementById("calcModalBackdrop").style.display = "flex";
-    document.getElementById("calcDisplay").textContent = calcBuffer;
-}
-
-function closeCalc() {
-    document.getElementById("calcModalBackdrop").style.display = "none";
-}
-
-function calcInput(val) {
-    if (calcBuffer === "0" && !isNaN(val)) {
-        calcBuffer = val;
-    } else {
-        calcBuffer += val;
-    }
-    document.getElementById("calcDisplay").textContent = calcBuffer;
-}
-
-function calcClear() {
-    calcBuffer = "0";
-    document.getElementById("calcDisplay").textContent = calcBuffer;
-}
-
-function calcEquals() {
-    try {
-        const result = eval(calcBuffer);
-        calcBuffer = String(result);
-        document.getElementById("calcDisplay").textContent = calcBuffer;
-    } catch {
-        calcBuffer = "0";
-        document.getElementById("calcDisplay").textContent = "Erreur";
-    }
-}
-
-/* -------- TODO -------- */
-let todos = [];
-
-function loadTodos() {
-    const saved = localStorage.getItem("hub_todos");
-    if (saved) {
-        try {
-            todos = JSON.parse(saved);
-        } catch {
-            todos = [];
-        }
-    }
-}
-
-function saveTodos() {
-    localStorage.setItem("hub_todos", JSON.stringify(todos));
-}
-
-function renderTodos() {
-    const list = document.getElementById("todoList");
-    list.innerHTML = "";
-    todos.forEach((t, index) => {
-        const item = document.createElement("div");
-        item.className = "todo-item";
-
-        const cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.checked = t.done;
-        cb.onchange = () => {
-            todos[index].done = cb.checked;
-            saveTodos();
-            renderTodos();
-        };
-
-        const span = document.createElement("span");
-        span.textContent = t.text;
-        if (t.done) span.classList.add("done");
-
-        item.appendChild(cb);
-        item.appendChild(span);
-        list.appendChild(item);
-    });
-}
-
-function openTodo() {
-    document.getElementById("todoModalBackdrop").style.display = "flex";
-    renderTodos();
-}
-
-function closeTodo() {
-    document.getElementById("todoModalBackdrop").style.display = "none";
-}
-
-function addTodo() {
-    const input = document.getElementById("todoInput");
-    const text = input.value.trim();
-    if (!text) return;
-    todos.push({ text, done: false });
-    saveTodos();
-    renderTodos();
-    input.value = "";
-}
-
 /* -------- TIMER -------- */
 let timerInterval = null;
 let timerRemaining = 0;
@@ -1558,7 +1250,6 @@ function startTimer() {
             timerInterval = null;
             timerRemaining = 0;
             updateTimerDisplay();
-            addNotification("Timer", "Le timer est terminé.");
             alert("Timer terminé !");
         } else {
             updateTimerDisplay();
@@ -1580,20 +1271,18 @@ function updateTimerDisplay() {
 /* -------- POMODORO -------- */
 let pomodoroInterval = null;
 let pomodoroRemaining = 0;
-let pomodoroMode = null; // "work" ou "break"
+let pomodoroMode = null;
 
 function startPomodoroWork() {
     pomodoroMode = "work";
     pomodoroRemaining = 25 * 60;
     runPomodoro();
-    addNotification("Pomodoro", "Session de travail démarrée (25 min).");
 }
 
 function startPomodoroBreak() {
     pomodoroMode = "break";
     pomodoroRemaining = 5 * 60;
     runPomodoro();
-    addNotification("Pomodoro", "Pause démarrée (5 min).");
 }
 
 function resetPomodoro() {
@@ -1612,7 +1301,6 @@ function runPomodoro() {
         if (pomodoroRemaining <= 0) {
             clearInterval(pomodoroInterval);
             pomodoroInterval = null;
-            addNotification("Pomodoro", pomodoroMode === "work" ? "Travail terminé, prends une pause." : "Pause terminée, retour au travail.");
             alert("Pomodoro terminé !");
             pomodoroMode = null;
             pomodoroRemaining = 0;
@@ -1635,13 +1323,164 @@ function updatePomodoroDisplay() {
     display.textContent = `${label} : ${m} min ${s.toString().padStart(2, "0")} s`;
 }
 
+/* -------- CHRONOMETRE -------- */
+let chronoInterval = null;
+let chronoStartTime = 0;
+let chronoElapsed = 0;
+
+function chronoStart() {
+    if (chronoInterval) return;
+    chronoStartTime = Date.now() - chronoElapsed;
+    chronoInterval = setInterval(updateChrono, 10);
+}
+
+function chronoStop() {
+    clearInterval(chronoInterval);
+    chronoInterval = null;
+}
+
+function chronoReset() {
+    chronoStop();
+    chronoElapsed = 0;
+    document.getElementById("chronoDisplay").textContent = "00:00.00";
+}
+
+function updateChrono() {
+    chronoElapsed = Date.now() - chronoStartTime;
+    const ms = Math.floor((chronoElapsed % 1000) / 10);
+    const s = Math.floor((chronoElapsed / 1000) % 60);
+    const m = Math.floor(chronoElapsed / 60000);
+    document.getElementById("chronoDisplay").textContent =
+        `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}.${String(ms).padStart(2,"0")}`;
+}
+
+/* -------- MOT DE PASSE -------- */
+function generatePassword() {
+    const len = parseInt(document.getElementById("pwdLength").value);
+    if (!len || len < 4) return;
+
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=";
+    let pwd = "";
+    for (let i = 0; i < len; i++) {
+        pwd += chars[Math.floor(Math.random() * chars.length)];
+    }
+    document.getElementById("pwdOutput").textContent = pwd;
+}
+
+/* -------- TEMPERATURE -------- */
+function convertTemp() {
+    const v = document.getElementById("tempInput").value.trim();
+    if (!v) return;
+    if (v.toLowerCase().endsWith("c")) {
+        const c = parseFloat(v);
+        const f = c * 9/5 + 32;
+        document.getElementById("tempOutput").textContent = `${f.toFixed(1)} °F`;
+    } else if (v.toLowerCase().endsWith("f")) {
+        const f = parseFloat(v);
+        const c = (f - 32) * 5/9;
+        document.getElementById("tempOutput").textContent = `${c.toFixed(1)} °C`;
+    } else {
+        document.getElementById("tempOutput").textContent = "Format invalide (ex: 20C ou 70F)";
+    }
+}
+
+/* -------- GENERATEUR DE NOMS -------- */
+const NAME_PARTS = ["Nova", "Prime", "Flux", "Aero", "Pulse", "Core", "Zen", "Ultra", "Hyper", "Neon"];
+
+function generateName() {
+    const a = NAME_PARTS[Math.floor(Math.random()*NAME_PARTS.length)];
+    const b = NAME_PARTS[Math.floor(Math.random()*NAME_PARTS.length)];
+    document.getElementById("nameOutput").textContent = a + b;
+}
+
+/* -------- AUDIO / VIDEO -------- */
+function loadAudio() {
+    const file = document.getElementById("audioFile").files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    document.getElementById("audioPlayer").src = url;
+}
+
+function loadVideo() {
+    const file = document.getElementById("videoFile").files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    document.getElementById("videoPlayer").src = url;
+}
+
+/* -------- QR CODE -------- */
+function generateQR() {
+    const text = document.getElementById("qrInput").value;
+    if (!text) return;
+    document.getElementById("qrImage").src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(text);
+}
+
+/* -------- RSS -------- */
+async function loadRSS() {
+    const url = document.getElementById("rssUrl").value;
+    if (!url) return;
+
+    const proxy = "https://api.allorigins.win/get?url=" + encodeURIComponent(url);
+    const res = await fetch(proxy);
+    const data = await res.json();
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(data.contents, "text/xml");
+    const items = xml.querySelectorAll("item");
+
+    const list = document.getElementById("rssList");
+    list.innerHTML = "";
+
+    items.forEach((item, i) => {
+        if (i >= 5) return;
+        const title = item.querySelector("title").textContent;
+        const link = item.querySelector("link").textContent;
+
+        const div = document.createElement("div");
+        div.className = "mini-list-item";
+        div.textContent = title;
+        div.onclick = () => window.open(link, "_blank");
+        list.appendChild(div);
+    });
+}
+
+/* -------- DEVISES -------- */
+async function convertCurrency() {
+    const amount = parseFloat(document.getElementById("curAmount").value);
+    const from = document.getElementById("curFrom").value;
+    const to = document.getElementById("curTo").value;
+
+    if (!amount) return;
+
+    const url = `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    document.getElementById("curOutput").textContent =
+        `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
+}
+
+/* -------- TRADUCTION -------- */
+async function translateText() {
+    const text = document.getElementById("tradInput").value;
+    const lang = document.getElementById("tradLang").value;
+    if (!text) return;
+
+    const res = await fetch("https://api.mymemory.translated.net/get?q=" +
+        encodeURIComponent(text) + "&langpair=auto|" + lang);
+    const data = await res.json();
+
+    document.getElementById("tradOutput").textContent =
+        data.responseData.translatedText;
+}
+
 /* -------- INIT -------- */
 (function init() {
     const savedTheme = localStorage.getItem("hub_theme") || "dark";
     applyTheme(savedTheme);
 
     loadCustomApps();
-    loadTodos();
     loadQuickLinks();
 
     const savedRecent = localStorage.getItem("hub_recent_apps");
@@ -1655,7 +1494,6 @@ function updatePomodoroDisplay() {
     }
 
     renderApps();
-    renderTodos();
     renderQuickLinks();
     renderRecentApps();
     renderSearchHistory();
@@ -1666,10 +1504,6 @@ function updatePomodoroDisplay() {
     updateWeather();
     setInterval(updateWeather, 10 * 60 * 1000);
     loadNotes();
-
-    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
-
-    addNotification("Système", "Hub démarré avec succès.");
 })();
 </script>
 
