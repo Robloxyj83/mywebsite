@@ -1,766 +1,1677 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browser OS - AI Chat</title>
-    <style>
-        * {
-            margin:  0;
-            padding: 0;
-            box-sizing:  border-box;
-        }
-
-        : root {
-            --primary:  #6366f1;
-            --secondary: #8b5cf6;
-            --bg-dark: #0f172a;
-            --bg-light: #1e293b;
-            --text-white: #ffffff;
-            --text-gray:  #cbd5e1;
-            --border: rgba(148, 163, 184, 0.2);
-        }
-
-        body {
-            background:  linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
-            color: var(--text-white);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* HEADER */
-        . header {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight:  700;
-            color: var(--text-white);
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .header-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            border: none;
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--text-white);
-            cursor: pointer;
-            font-size: 18px;
-            transition: all 0.2s;
-        }
-
-        .header-btn:hover {
-            background:  rgba(99, 102, 241, 0.2);
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            flex: 1;
-            display: flex;
-            gap: 16px;
-            padding: 16px;
-            overflow:  hidden;
-        }
-
-        . chat-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        . search-bar {
-            display: flex;
-            gap: 12px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-white);
-            font-size: 14px;
-        }
-
-        .search-input::placeholder {
-            color: var(--text-gray);
-        }
-
-        .search-btn {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            cursor:  pointer;
-            transition: all 0.2s;
-        }
-
-        .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
-        }
-
-        /* MESSAGES */
-        .messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            background: rgba(15, 23, 42, 0.6);
-            border:  1px solid var(--border);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .messages: :-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .messages::-webkit-scrollbar-thumb {
-            background: rgba(148, 163, 184, 0.3);
-            border-radius: 4px;
-        }
-
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color:  var(--text-gray);
-            text-align: center;
-        }
-
-        .empty-icon {
-            font-size: 48px;
-            margin-bottom:  12px;
-            opacity: 0.5;
-        }
-
-        .message {
-            display: flex;
-            gap: 12px;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform:  translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message. user {
-            justify-content: flex-end;
-        }
-
-        .msg-bubble {
-            max-width: 60%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            word-wrap: break-word;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .message.user .msg-bubble {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .message.ai . msg-bubble {
-            background:  rgba(99, 102, 241, 0.1);
-            border:  1px solid rgba(99, 102, 241, 0.2);
-            color: var(--text-white);
-        }
-
-        .loading {
-            display: flex;
-            gap: 6px;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: bounce 1.4s infinite;
-        }
-
-        . dot: nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0%, 100% { opacity: 0.3; transform: translateY(0); }
-            50% { opacity: 1; transform: translateY(-8px); }
-        }
-
-        /* INPUT */
-        .input-area {
-            display: flex;
-            gap: 12px;
-            padding: 0 16px 16px;
-        }
-
-        .textarea {
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-white);
-            font-family: inherit;
-            font-size: 14px;
-            resize: none;
-            max-height: 100px;
-        }
-
-        .textarea:: placeholder {
-            color: var(--text-gray);
-        }
-
-        .send-btn {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition:  all 0.2s;
-        }
-
-        .send-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 300px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            overflow-y: auto;
-            backdrop-filter: blur(10px);
-        }
-
-        .sidebar-title {
-            font-size: 12px;
-            font-weight:  600;
-            text-transform: uppercase;
-            color: var(--text-gray);
-            margin-bottom: 12px;
-        }
-
-        . panel {
-            margin-bottom: 20px;
-        }
-
-        . panel-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            font-size: 13px;
-            border-bottom:  1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .panel-item:last-child {
-            border-bottom: none;
-        }
-
-        .panel-label {
-            color: var(--text-gray);
-        }
-
-        .panel-value {
-            color: var(--text-white);
-            font-weight: 500;
-        }
-
-        /* TASKBAR */
-        .taskbar {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(30, 41, 59, 0.9);
-            backdrop-filter: blur(10px);
-            border:  1px solid var(--border);
-            border-radius: 50px;
-            padding: 12px 20px;
-            display: flex;
-            gap: 12px;
-            z-index: 1000;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .taskbar-btn {
-            width:  50px;
-            height: 50px;
-            border-radius:  12px;
-            border: 1px solid var(--border);
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--text-white);
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .taskbar-btn:hover {
-            background: rgba(99, 102, 241, 0.2);
-            transform: translateY(-5px);
-        }
-
-        . taskbar-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-color: var(--primary);
-        }
-
-        /* MODAL */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:  rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: rgba(15, 23, 42, 0.95);
-            border:  1px solid var(--border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            max-width: 500px;
-            width: 100%;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            animation: popIn 0.3s ease;
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom:  1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight:  600;
-            color: var(--text-white);
-        }
-
-        .modal-close {
-            width: 36px;
-            height: 36px;
-            border-radius:  8px;
-            border: none;
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--text-white);
-            cursor: pointer;
-            font-size: 20px;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        .modal-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-footer {
-            padding: 16px 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 12px;
-            justify-content:  flex-end;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        . btn-primary {
-            background:  linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--text-white);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(99, 102, 241, 0.2);
-        }
-
-        . history-item {
-            padding: 12px;
-            background: rgba(99, 102, 241, 0.05);
-            border:  1px solid rgba(99, 102, 241, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 8px;
-            transition: all 0.2s;
-            color: var(--text-white);
-            font-size: 13px;
-        }
-
-        . history-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-
-        .empty-history {
-            text-align: center;
-            color: var(--text-gray);
-            padding: 40px 20px;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .msg-bubble {
-                max-width: 90%;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Mon Hub Pro avec Copilot</title>
+
+<!-- Google Sans + Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Google Sans", system-ui, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        color: #e5e7eb;
+        background-image: url("https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    body.light {
+        color: #0f172a;
+    }
+
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at top, rgba(15,23,42,0.4), rgba(15,23,42,0.9));
+        z-index: -1;
+    }
+
+    body.light .overlay {
+        background: radial-gradient(circle at top, rgba(255,255,255,0.4), rgba(148,163,184,0.6));
+    }
+
+    .shell {
+        width: 100%;
+        max-width: 1200px;
+        background: rgba(15,23,42,0.9);
+        border-radius: 20px;
+        border: 1px solid rgba(148,163,184,0.35);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+        transition: background 0.2s, border-color 0.2s;
+        position: relative;
+    }
+
+    body.light .shell {
+        background: rgba(248,250,252,0.95);
+        border-color: rgba(148,163,184,0.7);
+    }
+
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav {
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-item {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 14px;
+        cursor: pointer;
+        color: #cbd5f5;
+        transition: 0.18s;
+    }
+
+    .nav-item.active {
+        background: rgba(59,130,246,0.2);
+        border: 1px solid rgba(59,130,246,0.6);
+        color: #e5edff;
+    }
+
+    .nav-item:hover {
+        background: rgba(148,163,184,0.18);
+    }
+
+    body.light .nav-item {
+        color: #1f2937;
+    }
+
+    .status {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 13px;
+        color: #9ca3af;
+    }
+
+    .pill {
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(15,23,42,0.9);
+        border: 1px solid rgba(148,163,184,0.4);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    body.light .pill {
+        background: rgba(241,245,249,0.95);
+        border-color: rgba(148,163,184,0.8);
+        color: #111827;
+    }
+
+    .pill-button {
+        cursor: pointer;
+    }
+
+    .main {
+        display: grid;
+        grid-template-columns: 260px 1fr 300px;
+        gap: 16px;
+    }
+
+    .card {
+        background: rgba(15,23,42,0.96);
+        border-radius: 16px;
+        border: 1px solid rgba(148,163,184,0.35);
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: background 0.2s, border-color 0.2s;
+    }
+
+    body.light .card {
+        background: rgba(248,250,252,0.98);
+        border-color: rgba(148,163,184,0.7);
+    }
+
+    .card-title {
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .time {
+        font-size: 34px;
+        font-weight: 600;
+    }
+
+    .date {
+        font-size: 13px;
+        color: #9ca3af;
+    }
+
+    body.light .date {
+        color: #6b7280;
+    }
+
+    #weatherLine {
+        margin-top: 8px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .weather-btn {
+        border-radius: 999px;
+        border: none;
+        padding: 3px 10px;
+        font-size: 11px;
+        cursor: pointer;
+        background: rgba(59,130,246,0.9);
+        color: white;
+    }
+
+    .search-box {
+        background: rgba(15,23,42,0.9);
+        border-radius: 999px;
+        border: 1px solid rgba(148,163,184,0.5);
+        padding: 6px 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    body.light .search-box {
+        background: rgba(241,245,249,0.95);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .search-box input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: inherit;
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .search-select {
+        background: transparent;
+        border: none;
+        color: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+
+    .material-symbols-rounded {
+        font-size: 22px;
+        color: #9ca3af;
+    }
+
+    body.light .material-symbols-rounded {
+        color: #6b7280;
+    }
+
+    .apps-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .app-tile {
+        background: rgba(15,23,42,0.9);
+        border-radius: 12px;
+        border: 1px solid rgba(148,163,184,0.4);
+        padding: 10px 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.18s;
+        font-size: 12px;
+    }
+
+    body.light .app-tile {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .app-tile:hover {
+        border-color: rgba(59,130,246,0.8);
+        transform: translateY(-2px);
+    }
+
+    .app-icon {
+        font-size: 26px;
+        margin-bottom: 4px;
+    }
+
+    .more-toggle {
+        margin-top: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        color: #93c5fd;
+        text-align: right;
+    }
+
+    .more-toggle:hover {
+        text-decoration: underline;
+    }
+
+    #moreAppsSection {
+        margin-top: 10px;
+        border-top: 1px solid rgba(148,163,184,0.4);
+        padding-top: 10px;
+        display: none;
+    }
+
+    .notes-area {
+        width: 100%;
+        min-height: 110px;
+        background: rgba(15,23,42,0.9);
+        border-radius: 10px;
+        border: 1px solid rgba(148,163,184,0.5);
+        padding: 8px;
+        color: inherit;
+        font-size: 13px;
+        outline: none;
+        resize: vertical;
+    }
+
+    body.light .notes-area {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .helper-text {
+        font-size: 11px;
+        color: #9ca3af;
+    }
+
+    body.light .helper-text {
+        color: #6b7280;
+    }
+
+    .copilot-box {
+        background: rgba(15,23,42,0.9);
+        border-radius: 12px;
+        border: 1px solid rgba(59,130,246,0.6);
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    body.light .copilot-box {
+        background: rgba(239,246,255,0.98);
+        border-color: rgba(59,130,246,0.8);
+    }
+
+    .copilot-input-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .copilot-input-row input {
+        flex: 1;
+        background: rgba(15,23,42,0.9);
+        border-radius: 999px;
+        border: 1px solid rgba(148,163,184,0.6);
+        padding: 6px 10px;
+        color: inherit;
+        font-size: 13px;
+        outline: none;
+    }
+
+    body.light .copilot-input-row input {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .copilot-input-row button {
+        border-radius: 999px;
+        border: none;
+        padding: 6px 12px;
+        font-size: 13px;
+        cursor: pointer;
+        background: rgba(59,130,246,0.9);
+        color: white;
+        transition: 0.15s;
+    }
+
+    .copilot-input-row button:hover {
+        background: rgba(37,99,235,1);
+    }
+
+    .copilot-hint {
+        font-size: 11px;
+        color: #9ca3af;
+    }
+
+    body.light .copilot-hint {
+        color: #6b7280;
+    }
+
+    .add-app-form {
+        margin-top: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .add-app-form input {
+        width: 100%;
+        background: rgba(15,23,42,0.9);
+        border-radius: 8px;
+        border: 1px solid rgba(148,163,184,0.6);
+        padding: 5px 8px;
+        color: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+
+    body.light .add-app-form input {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .add-app-form button {
+        align-self: flex-end;
+        border-radius: 999px;
+        border: none;
+        padding: 5px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        background: rgba(34,197,94,0.9);
+        color: white;
+        transition: 0.15s;
+    }
+
+    .add-app-form button:hover {
+        background: rgba(22,163,74,1);
+    }
+
+    /* Notifications center */
+    .notifications-panel {
+        position: absolute;
+        top: 60px;
+        right: 30px;
+        width: 280px;
+        max-height: 320px;
+        background: rgba(15,23,42,0.98);
+        border-radius: 16px;
+        border: 1px solid rgba(148,163,184,0.6);
+        padding: 10px;
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        overflow-y: auto;
+        z-index: 20;
+    }
+
+    body.light .notifications-panel {
+        background: rgba(248,250,252,0.98);
+        border-color: rgba(148,163,184,0.9);
+    }
+
+    .notification-item {
+        font-size: 12px;
+        padding: 6px 8px;
+        border-radius: 8px;
+        background: rgba(15,23,42,0.9);
+        border: 1px solid rgba(148,163,184,0.5);
+    }
+
+    body.light .notification-item {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .notification-title {
+        font-weight: 600;
+        margin-bottom: 2px;
+        font-size: 12px;
+    }
+
+    .notification-time {
+        font-size: 10px;
+        color: #9ca3af;
+    }
+
+    body.light .notification-time {
+        color: #6b7280;
+    }
+
+    /* Modales (calculatrice, todo) */
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15,23,42,0.6);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 30;
+    }
+
+    .modal {
+        width: 320px;
+        max-width: 90vw;
+        background: rgba(15,23,42,0.98);
+        border-radius: 16px;
+        border: 1px solid rgba(148,163,184,0.7);
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    body.light .modal {
+        background: rgba(248,250,252,0.98);
+        border-color: rgba(148,163,184,0.9);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .modal-close {
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .calc-display {
+        background: rgba(15,23,42,0.9);
+        border-radius: 10px;
+        border: 1px solid rgba(148,163,184,0.6);
+        padding: 8px;
+        text-align: right;
+        font-size: 18px;
+        min-height: 32px;
+        overflow-x: auto;
+    }
+
+    body.light .calc-display {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .calc-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+    }
+
+    .calc-btn {
+        padding: 8px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        background: rgba(30,64,175,0.9);
+        color: white;
+    }
+
+    .calc-btn.op {
+        background: rgba(37,99,235,0.9);
+    }
+
+    .calc-btn.eq {
+        background: rgba(22,163,74,0.9);
+    }
+
+    .calc-btn.clear {
+        background: rgba(220,38,38,0.9);
+    }
+
+    .calc-btn:hover {
+        filter: brightness(1.1);
+    }
+
+    .todo-list {
+        max-height: 200px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .todo-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        padding: 4px 6px;
+        border-radius: 8px;
+        background: rgba(15,23,42,0.9);
+        border: 1px solid rgba(148,163,184,0.6);
+    }
+
+    body.light .todo-item {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .todo-item input[type="checkbox"] {
+        cursor: pointer;
+    }
+
+    .todo-item span.done {
+        text-decoration: line-through;
+        opacity: 0.6;
+    }
+
+    .todo-input-row {
+        display: flex;
+        gap: 6px;
+        margin-top: 4px;
+    }
+
+    .todo-input-row input {
+        flex: 1;
+        background: rgba(15,23,42,0.9);
+        border-radius: 8px;
+        border: 1px solid rgba(148,163,184,0.6);
+        padding: 5px 8px;
+        color: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+
+    body.light .todo-input-row input {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .todo-input-row button {
+        border-radius: 999px;
+        border: none;
+        padding: 5px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        background: rgba(59,130,246,0.9);
+        color: white;
+    }
+
+    .todo-input-row button:hover {
+        background: rgba(37,99,235,1);
+    }
+
+    /* Timer */
+    .timer-box {
+        margin-top: 8px;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid rgba(148,163,184,0.5);
+        background: rgba(15,23,42,0.9);
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    body.light .timer-box {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .timer-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .timer-row input {
+        flex: 1;
+        background: transparent;
+        border-radius: 8px;
+        border: 1px solid rgba(148,163,184,0.6);
+        padding: 4px 6px;
+        color: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+
+    .timer-row button {
+        border-radius: 999px;
+        border: none;
+        padding: 4px 8px;
+        font-size: 12px;
+        cursor: pointer;
+        background: rgba(34,197,94,0.9);
+        color: white;
+    }
+
+    .timer-display {
+        font-size: 13px;
+    }
+
+    /* Pomodoro */
+    .pomodoro-box {
+        margin-top: 8px;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid rgba(148,163,184,0.5);
+        background: rgba(15,23,42,0.9);
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    body.light .pomodoro-box {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .pomodoro-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .pomodoro-row button {
+        border-radius: 999px;
+        border: none;
+        padding: 4px 8px;
+        font-size: 12px;
+        cursor: pointer;
+        background: rgba(59,130,246,0.9);
+        color: white;
+    }
+
+    .pomodoro-display {
+        font-size: 13px;
+    }
+
+    /* Quick links & history */
+    .mini-list {
+        margin-top: 6px;
+        max-height: 120px;
+        overflow-y: auto;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .mini-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 6px;
+        border-radius: 8px;
+        background: rgba(15,23,42,0.9);
+        border: 1px solid rgba(148,163,184,0.5);
+        cursor: pointer;
+    }
+
+    body.light .mini-list-item {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .mini-list-item span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mini-list-item button {
+        border: none;
+        background: transparent;
+        color: #9ca3af;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .quote-box {
+        margin-top: 8px;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid rgba(148,163,184,0.5);
+        background: rgba(15,23,42,0.9);
+        font-size: 12px;
+    }
+
+    body.light .quote-box {
+        background: rgba(241,245,249,0.98);
+        border-color: rgba(148,163,184,0.8);
+    }
+
+    .quote-text {
+        font-style: italic;
+        margin-bottom: 4px;
+    }
+
+    .quote-author {
+        font-size: 11px;
+        color: #9ca3af;
+    }
+
+    @media (max-width: 980px) {
+        .main {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo">🧠 Browser OS</div>
-            <div class="header-actions">
-                <button class="header-btn" id="newChatBtn">➕</button>
-                <button class="header-btn" id="settingsBtn">⚙️</button>
-                <button class="header-btn" id="themeBtn">🌙</button>
-            </div>
+<div class="overlay"></div>
+
+<div class="shell">
+
+    <div class="topbar">
+        <div class="nav">
+            <div class="nav-item active">Accueil</div>
+            <div class="nav-item">Projets</div>
+            <div class="nav-item">Copilot</div>
         </div>
 
-        <!-- MAIN -->
-        <div class="main-content">
-            <!-- CHAT -->
-            <div class="chat-area">
-                <div class="search-bar">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Ask AI...">
-                    <button class="search-btn" id="searchBtn">Send</button>
-                </div>
-
-                <div class="messages" id="messagesBox">
-                    <div class="empty-state">
-                        <div class="empty-icon">💬</div>
-                        <div>No messages yet</div>
-                    </div>
-                </div>
-
-                <div class="input-area">
-                    <textarea class="textarea" id="chatInput" placeholder="Type message..."></textarea>
-                    <button class="send-btn" id="sendBtn">Send</button>
-                </div>
+        <div class="status">
+            <div class="pill" id="timeDisplay">--:--</div>
+            <div class="pill" id="dateDisplay">---</div>
+            <div class="pill pill-button" id="themeToggle">
+                <span class="material-symbols-rounded">dark_mode</span>
             </div>
-
-            <!-- SIDEBAR -->
-            <div class="sidebar">
-                <div class="panel">
-                    <div class="sidebar-title">Status</div>
-                    <div class="panel-item">
-                        <span class="panel-label">Connection</span>
-                        <span class="panel-value">✓ Connected</span>
-                    </div>
-                    <div class="panel-item">
-                        <span class="panel-label">Messages</span>
-                        <span class="panel-value" id="msgCount">0</span>
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="sidebar-title">Settings</div>
-                    <div class="panel-item">
-                        <span class="panel-label">Model</span>
-                        <span class="panel-value">GPT-3.5</span>
-                    </div>
-                    <div class="panel-item">
-                        <span class="panel-label">Temperature</span>
-                        <span class="panel-value">0.7</span>
-                    </div>
-                </div>
+            <div class="pill pill-button" id="notifToggle">
+                <span class="material-symbols-rounded">notifications</span>
+            </div>
+            <div class="pill" id="weatherSmall">
+                <span id="weatherIconSmall">🌥️</span>
+                <span id="weatherTempSmall">--°C</span>
             </div>
         </div>
     </div>
 
-    <!-- TASKBAR -->
-    <div class="taskbar">
-        <button class="taskbar-btn" id="historyBtn" title="History">📋</button>
-        <button class="taskbar-btn" title="Menu">⚙️</button>
-        <button class="taskbar-btn" title="Notifications">🔔</button>
+    <div id="notificationsPanel" class="notifications-panel">
+        <div class="card-title" style="font-size:14px;">Notifications</div>
+        <div id="notificationsList"></div>
     </div>
 
-    <!-- HISTORY MODAL -->
-    <div class="modal-overlay" id="historyModal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">📋 Chat History</div>
-                <button class="modal-close" id="closeHistory">✕</button>
+    <div class="main">
+
+        <!-- Colonne gauche -->
+        <div class="card">
+            <div class="card-title">Aujourd’hui</div>
+            <div class="time" id="bigTime">--:--</div>
+            <div class="date" id="bigDate">---</div>
+            <div id="weatherLine">
+                <span id="weatherIcon">🌥️</span>
+                <span id="weatherText">Chargement de la météo...</span>
+                <button class="weather-btn" onclick="openWeatherDetails()">Détails météo</button>
             </div>
-            <div class="modal-content" id="historyList">
-                <div class="empty-history">No history yet</div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="clearBtn">Clear</button>
-                <button class="btn btn-primary" id="closeHistoryBtn">Close</button>
+
+            <div class="quote-box">
+                <div class="card-title" style="font-size:13px;margin-bottom:4px;">Citation du jour</div>
+                <div id="quoteText" class="quote-text">...</div>
+                <div id="quoteAuthor" class="quote-author"></div>
             </div>
         </div>
-    </div>
 
-    <!-- SETTINGS MODAL -->
-    <div class="modal-overlay" id="settingsModal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">Settings</div>
-                <button class="modal-close" id="closeSettings">✕</button>
+        <!-- Centre -->
+        <div class="card">
+            <div class="card-title">Rechercher</div>
+            <div class="search-box">
+                <span class="material-symbols-rounded">search</span>
+                <input id="searchInput" placeholder="Tapez votre recherche puis Entrée">
+                <select id="searchEngine" class="search-select">
+                    <option value="bing">Bing</option>
+                    <option value="google">Google</option>
+                    <option value="youtube">YouTube</option>
+                </select>
             </div>
-            <div class="modal-content">
-                <label style="color: var(--text-white); display: block; margin-bottom: 16px;">
-                    <div style="margin-bottom: 8px; font-size: 13px; color: var(--text-gray);">API Endpoint</div>
-                    <input type="text" id="apiUrl" value="http://localhost:3000/api/chat" 
-                        style="width: 100%; padding:  10px; background: rgba(30, 41, 59, 0.6); border: 1px solid var(--border); border-radius: 8px; color: var(--text-white); font-family: monospace;">
-                </label>
+
+            <div class="helper-text" style="margin-top:4px;">Historique des recherches (dernier 10) :</div>
+            <div id="searchHistoryList" class="mini-list"></div>
+
+            <div class="card-title" style="margin-top: 10px;">Applications</div>
+            <div id="appsGrid" class="apps-grid"></div>
+
+            <div class="more-toggle" id="moreToggle">Afficher plus d’applications</div>
+
+            <div id="moreAppsSection">
+                <div class="card-title" style="font-size:13px;margin-bottom:4px;">Toutes les applications</div>
+                <div id="moreAppsGrid" class="apps-grid"></div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="closeSettingsBtn">Close</button>
-                <button class="btn btn-primary" id="saveSettingsBtn">Save</button>
+
+            <div class="card-title" style="margin-top:10px;">Apps récentes</div>
+            <div id="recentAppsList" class="mini-list"></div>
+        </div>
+
+        <!-- Droite -->
+        <div class="card">
+            <div class="card-title">Notes</div>
+            <textarea class="notes-area" id="notesArea" placeholder="Écrivez vos notes, idées, liens de projets..."></textarea>
+            <div class="helper-text">Les notes sont enregistrées automatiquement dans ce navigateur.</div>
+
+            <div class="card-title" style="margin-top: 8px;">Copilot</div>
+            <div class="copilot-box">
+                <div class="copilot-input-row">
+                    <input id="copilotInput" placeholder="Ex : ouvre canva, ouvre github, note acheter du lait...">
+                    <button onclick="runCopilot()">Lancer</button>
+                </div>
+                <div class="copilot-hint">
+                    Copilot ouvre les apps, ajoute des notes, ou lance une recherche si l’app n’existe pas.
+                </div>
+
+                <div class="add-app-form">
+                    <input id="newAppName" placeholder="Nom de l’application (ex : AlteOS)">
+                    <input id="newAppUrl" placeholder="URL de l’application (https://...)">
+                    <input id="newAppIcon" placeholder="Icône Material (ex : apps, code, brush) – optionnel">
+                    <button onclick="addCustomApp()">Ajouter une application</button>
+                </div>
+            </div>
+
+            <div class="card-title" style="margin-top:8px;">Liens rapides</div>
+            <div class="add-app-form">
+                <input id="quickName" placeholder="Nom du lien (ex : Dashboard AlteOS)">
+                <input id="quickUrl" placeholder="URL (https://...)">
+                <button onclick="addQuickLink()">Ajouter un lien</button>
+            </div>
+            <div id="quickLinksList" class="mini-list"></div>
+
+            <div class="timer-box">
+                <div><strong>Timer rapide</strong></div>
+                <div class="timer-row">
+                    <input id="timerMinutes" type="number" min="1" placeholder="Minutes">
+                    <button onclick="startTimer()">Start</button>
+                </div>
+                <div class="timer-display" id="timerDisplay">Aucun timer en cours.</div>
+            </div>
+
+            <div class="pomodoro-box">
+                <div><strong>Pomodoro</strong> (25 travail / 5 pause)</div>
+                <div class="pomodoro-row">
+                    <button onclick="startPomodoroWork()">Start travail</button>
+                    <button onclick="startPomodoroBreak()">Start pause</button>
+                    <button onclick="resetPomodoro()">Reset</button>
+                </div>
+                <div class="pomodoro-display" id="pomodoroDisplay">Pomodoro inactif.</div>
             </div>
         </div>
+
     </div>
+</div>
 
-    <script>
-        const CONFIG = { API_URL: 'http://localhost:3000/api/chat' };
-        const STATE = {
-            messages: [],
-            history: [],
-            isLoading: false,
-            msgCount: 0
-        };
+<!-- Modale Calculatrice -->
+<div id="calcModalBackdrop" class="modal-backdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <span>Calculatrice</span>
+            <span class="modal-close" onclick="closeCalc()">&times;</span>
+        </div>
+        <div id="calcDisplay" class="calc-display">0</div>
+        <div class="calc-grid">
+            <button class="calc-btn clear" onclick="calcClear()">C</button>
+            <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+            <button class="calc-btn op" onclick="calcInput('*')">×</button>
+            <button class="calc-btn op" onclick="calcInput('-')">−</button>
 
-        const els = {
-            searchInput: document.getElementById('searchInput'),
-            chatInput: document.getElementById('chatInput'),
-            messagesBox: document. getElementById('messagesBox'),
-            searchBtn: document.getElementById('searchBtn'),
-            sendBtn: document. getElementById('sendBtn'),
-            historyBtn: document.getElementById('historyBtn'),
-            historyModal: document.getElementById('historyModal'),
-            historyList: document.getElementById('historyList'),
-            closeHistory: document.getElementById('closeHistory'),
-            closeHistoryBtn: document.getElementById('closeHistoryBtn'),
-            clearBtn: document.getElementById('clearBtn'),
-            settingsBtn: document.getElementById('settingsBtn'),
-            settingsModal: document.getElementById('settingsModal'),
-            closeSettings: document.getElementById('closeSettings'),
-            closeSettingsBtn: document.getElementById('closeSettingsBtn'),
-            saveSettingsBtn: document.getElementById('saveSettingsBtn'),
-            apiUrl: document.getElementById('apiUrl'),
-            newChatBtn: document.getElementById('newChatBtn'),
-            msgCount: document.getElementById('msgCount')
-        };
+            <button class="calc-btn" onclick="calcInput('7')">7</button>
+            <button class="calc-btn" onclick="calcInput('8')">8</button>
+            <button class="calc-btn" onclick="calcInput('9')">9</button>
+            <button class="calc-btn op" onclick="calcInput('+')">+</button>
 
-        function addMsg(text, role = 'user', loading = false) {
-            if (els.messagesBox.querySelector('.empty-state')) {
-                els. messagesBox.innerHTML = '';
+            <button class="calc-btn" onclick="calcInput('4')">4</button>
+            <button class="calc-btn" onclick="calcInput('5')">5</button>
+            <button class="calc-btn" onclick="calcInput('6')">6</button>
+            <button class="calc-btn eq" onclick="calcEquals()">=</button>
+
+            <button class="calc-btn" onclick="calcInput('1')">1</button>
+            <button class="calc-btn" onclick="calcInput('2')">2</button>
+            <button class="calc-btn" onclick="calcInput('3')">3</button>
+            <button class="calc-btn" onclick="calcInput('0')">0</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modale To-Do -->
+<div id="todoModalBackdrop" class="modal-backdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <span>Tâches</span>
+            <span class="modal-close" onclick="closeTodo()">&times;</span>
+        </div>
+        <div id="todoList" class="todo-list"></div>
+        <div class="todo-input-row">
+            <input id="todoInput" placeholder="Nouvelle tâche...">
+            <button onclick="addTodo()">Ajouter</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* -------- CONFIG METEO WTTR.IN -------- */
+const WEATHER_CITY = "Quebec";
+
+/* -------- DONNÉES APPS -------- */
+let baseApps = [
+    { name: "Canva", url: "https://www.canva.com", icon: "brush" },
+    { name: "Canva Docs", url: "https://www.canva.com/docs", icon: "description" },
+    { name: "Gmail", url: "https://mail.google.com", icon: "mail" },
+    { name: "YouTube", url: "https://www.youtube.com", icon: "play_circle" },
+    { name: "YouTube Studio", url: "https://studio.youtube.com", icon: "video_settings" },
+    { name: "Office", url: "https://www.office.com", icon: "description" },
+    { name: "GitHub", url: "https://github.com", icon: "code" },
+    { name: "Commandes", url: "apps/commandes-simple/index.html", icon: "terminal" },
+    { name: "Google Drive", url: "https://drive.google.com", icon: "cloud" },
+    { name: "Google Docs", url: "https://docs.google.com", icon: "article" },
+    { name: "Google Sheets", url: "https://docs.google.com/spreadsheets", icon: "grid_on" },
+    { name: "Google Slides", url: "https://docs.google.com/presentation", icon: "slideshow" },
+    { name: "Google Agenda", url: "https://calendar.google.com", icon: "calendar_month" },
+    { name: "Google Photos", url: "https://photos.google.com", icon: "photo_library" },
+    { name: "Google", url: "https://www.google.com", icon: "language" },
+    { name: "Bing", url: "https://www.bing.com", icon: "travel_explore" },
+    { name: "Unsplash", url: "https://unsplash.com", icon: "image" },
+    { name: "Discord", url: "https://discord.com/app", icon: "forum" },
+    { name: "WhatsApp Web", url: "https://web.whatsapp.com", icon: "chat" },
+    { name: "Messenger", url: "https://www.messenger.com", icon: "chat_bubble" },
+    { name: "TikTok", url: "https://www.tiktok.com", icon: "movie" },
+    { name: "Twitter / X", url: "https://x.com", icon: "alternate_email" },
+    { name: "Facebook", url: "https://www.facebook.com", icon: "groups" },
+    { name: "Instagram", url: "https://www.instagram.com", icon: "photo_camera" },
+    { name: "LinkedIn", url: "https://www.linkedin.com", icon: "work" },
+    { name: "Spotify", url: "https://open.spotify.com", icon: "music_note" },
+    { name: "YouTube Music", url: "https://music.youtube.com", icon: "queue_music" },
+    { name: "Deezer", url: "https://www.deezer.com", icon: "graphic_eq" },
+    { name: "Netflix", url: "https://www.netflix.com", icon: "live_tv" },
+    { name: "Twitch", url: "https://www.twitch.tv", icon: "sports_esports" },
+    { name: "Trello", url: "https://trello.com", icon: "view_kanban" },
+    { name: "Notion", url: "https://www.notion.so", icon: "note" },
+    { name: "Figma", url: "https://www.figma.com", icon: "draw" },
+    { name: "OneDrive", url: "https://onedrive.live.com", icon: "cloud_upload" },
+    { name: "OneNote", url: "https://www.onenote.com", icon: "edit_note" },
+    { name: "Teams", url: "https://teams.microsoft.com", icon: "groups_2" },
+    { name: "Zoom", url: "https://zoom.us", icon: "video_call" },
+    { name: "Slack", url: "https://slack.com", icon: "chat_bubble" },
+    { name: "Pinterest", url: "https://www.pinterest.com", icon: "push_pin" },
+    { name: "Reddit", url: "https://www.reddit.com", icon: "forum" },
+    { name: "GitLab", url: "https://gitlab.com", icon: "terminal" },
+    { name: "Stack Overflow", url: "https://stackoverflow.com", icon: "help" },
+    { name: "CodePen", url: "https://codepen.io", icon: "code_blocks" },
+    { name: "Replit", url: "https://replit.com", icon: "code" },
+    { name: "OpenAI", url: "https://openai.com", icon: "psychology" },
+    { name: "ChatGPT", url: "https://chat.openai.com", icon: "smart_toy" },
+    { name: "Gemini", url: "https://gemini.google.com", icon: "auto_awesome" },
+    { name: "Calculatrice", url: "#calc", icon: "calculate", internal: "calc" },
+    { name: "Tâches", url: "#todo", icon: "checklist", internal: "todo" }
+];
+
+let customApps = [];
+let recentApps = [];
+let searchHistory = [];
+let quickLinks = [];
+
+/* -------- QUOTES -------- */
+const QUOTES = [
+    { text: "Commence là où tu es, avec ce que tu as.", author: "Inconnu" },
+    { text: "La discipline bat la motivation.", author: "Inconnu" },
+    { text: "Fait > parfait.", author: "Inconnu" },
+    { text: "Chaque petit progrès compte.", author: "Inconnu" },
+    { text: "Tu construis ton futur une ligne de code à la fois.", author: "Inconnu" }
+];
+
+function pickRandomQuote() {
+    const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    document.getElementById("quoteText").textContent = "« " + q.text + " »";
+    document.getElementById("quoteAuthor").textContent = q.author;
+}
+
+/* -------- THEME -------- */
+function applyTheme(theme) {
+    if (theme === "light") {
+        document.body.classList.add("light");
+        document.getElementById("themeToggle").querySelector(".material-symbols-rounded").textContent = "light_mode";
+    } else {
+        document.body.classList.remove("light");
+        document.getElementById("themeToggle").querySelector(".material-symbols-rounded").textContent = "dark_mode";
+    }
+}
+
+function toggleTheme() {
+    const current = localStorage.getItem("hub_theme") || "dark";
+    const next = current === "dark" ? "light" : "dark";
+    localStorage.setItem("hub_theme", next);
+    applyTheme(next);
+}
+
+/* -------- NOTIFICATIONS -------- */
+function addNotification(title, message) {
+    const list = document.getElementById("notificationsList");
+    const item = document.createElement("div");
+    item.className = "notification-item";
+
+    const t = document.createElement("div");
+    t.className = "notification-title";
+    t.textContent = title;
+
+    const m = document.createElement("div");
+    m.textContent = message;
+
+    const time = document.createElement("div");
+    time.className = "notification-time";
+    time.textContent = new Date().toLocaleTimeString("fr-CA", { hour: "2-digit", minute: "2-digit" });
+
+    item.appendChild(t);
+    item.appendChild(m);
+    item.appendChild(time);
+    list.prepend(item);
+}
+
+/* -------- APPS -------- */
+function loadCustomApps() {
+    const saved = localStorage.getItem("hub_custom_apps");
+    if (saved) {
+        try {
+            customApps = JSON.parse(saved);
+        } catch {
+            customApps = [];
+        }
+    }
+}
+
+function saveCustomApps() {
+    localStorage.setItem("hub_custom_apps", JSON.stringify(customApps));
+}
+
+function getAllApps() {
+    return [...baseApps, ...customApps];
+}
+
+function renderApps() {
+    const appsGrid = document.getElementById("appsGrid");
+    const moreGrid = document.getElementById("moreAppsGrid");
+    appsGrid.innerHTML = "";
+    moreGrid.innerHTML = "";
+
+    const all = getAllApps();
+
+    const mainApps = all.slice(0, 16);
+    mainApps.forEach(app => {
+        appsGrid.appendChild(createAppTile(app));
+    });
+
+    all.forEach(app => {
+        moreGrid.appendChild(createAppTile(app));
+    });
+}
+
+function createAppTile(app) {
+    const div = document.createElement("div");
+    div.className = "app-tile";
+    div.onclick = () => openApp(app);
+
+    const iconSpan = document.createElement("span");
+    iconSpan.className = "material-symbols-rounded app-icon";
+    iconSpan.textContent = app.icon || "apps";
+
+    const label = document.createElement("div");
+    label.textContent = app.name;
+
+    div.appendChild(iconSpan);
+    div.appendChild(label);
+    return div;
+}
+
+function pushRecentApp(app) {
+    const key = app.name + "|" + (app.url || "");
+    recentApps = recentApps.filter(a => (a.key !== key));
+    recentApps.unshift({ key, name: app.name, url: app.url || "", internal: app.internal || null });
+    if (recentApps.length > 8) recentApps.pop();
+    localStorage.setItem("hub_recent_apps", JSON.stringify(recentApps));
+    renderRecentApps();
+}
+
+function renderRecentApps() {
+    const list = document.getElementById("recentAppsList");
+    list.innerHTML = "";
+    recentApps.forEach(a => {
+        const item = document.createElement("div");
+        item.className = "mini-list-item";
+        item.onclick = () => {
+            if (a.internal) {
+                if (a.internal === "calc") openCalc();
+                else if (a.internal === "todo") openTodo();
+            } else if (a.url) {
+                window.open(a.url, "_blank");
             }
+        };
+        const span = document.createElement("span");
+        span.textContent = a.name;
+        item.appendChild(span);
+        list.appendChild(item);
+    });
+}
 
-            const msg = document.createElement('div');
-            msg.className = `message ${role}`;
+function openApp(app) {
+    if (app.internal === "calc") {
+        openCalc();
+        addNotification("Application", "Calculatrice ouverte.");
+        pushRecentApp(app);
+        return;
+    }
+    if (app.internal === "todo") {
+        openTodo();
+        addNotification("Application", "Tâches ouvertes.");
+        pushRecentApp(app);
+        return;
+    }
+    window.open(app.url, "_blank");
+    addNotification("Application", `Ouverture de ${app.name}`);
+    pushRecentApp(app);
+}
 
-            if (loading) {
-                msg.innerHTML = `<div class="msg-bubble"><div class="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+/* -------- HEURE -------- */
+function updateTime() {
+    const now = new Date();
+    const time = now.toLocaleTimeString("fr-CA", { hour: "2-digit", minute: "2-digit" });
+    const date = now.toLocaleDateString("fr-CA", { weekday: "long", day: "numeric", month: "long" });
+
+    document.getElementById("timeDisplay").textContent = time;
+    document.getElementById("dateDisplay").textContent = date;
+    document.getElementById("bigTime").textContent = time;
+    document.getElementById("bigDate").textContent = date;
+}
+
+/* -------- METEO via wttr.in -------- */
+async function updateWeather() {
+    try {
+        const url = `https://wttr.in/${encodeURIComponent(WEATHER_CITY)}?format=j1`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Erreur API météo");
+        const data = await res.json();
+
+        const cond = data.current_condition[0];
+        const temp = parseInt(cond.temp_C, 10);
+        const desc = (cond.weatherDesc[0].value || "").toLowerCase();
+
+        const icon = mapWeatherIconFromDesc(desc);
+        const text = `${capitalize(desc)} · ${temp}°C · ${WEATHER_CITY}`;
+
+        document.getElementById("weatherIcon").textContent = icon;
+        document.getElementById("weatherText").textContent = text;
+        document.getElementById("weatherIconSmall").textContent = icon;
+        document.getElementById("weatherTempSmall").textContent = temp + "°C";
+    } catch (e) {
+        document.getElementById("weatherText").textContent = "Météo indisponible";
+    }
+}
+
+function openWeatherDetails() {
+    const url = `https://wttr.in/${encodeURIComponent(WEATHER_CITY)}`;
+    window.open(url, "_blank");
+    addNotification("Météo", "Ouverture des détails météo.");
+}
+
+function mapWeatherIconFromDesc(desc) {
+    if (!desc) return "🌥️";
+    if (desc.includes("sun") || desc.includes("soleil") || desc.includes("clear")) return "☀️";
+    if (desc.includes("partly") || desc.includes("partiel") || desc.includes("peu nuageux")) return "🌤️";
+    if (desc.includes("cloud")) return "☁️";
+    if (desc.includes("rain") || desc.includes("pluie") || desc.includes("shower")) return "🌧️";
+    if (desc.includes("thunder") || desc.includes("orage")) return "⛈️";
+    if (desc.includes("snow") || desc.includes("neige")) return "❄️";
+    if (desc.includes("fog") || desc.includes("brume") || desc.includes("mist")) return "🌫️";
+    return "🌥️";
+}
+
+function capitalize(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/* -------- RECHERCHE + HISTORIQUE -------- */
+function pushSearchHistory(q, engine) {
+    searchHistory.unshift({ q, engine });
+    if (searchHistory.length > 10) searchHistory.pop();
+    localStorage.setItem("hub_search_history", JSON.stringify(searchHistory));
+    renderSearchHistory();
+}
+
+function renderSearchHistory() {
+    const list = document.getElementById("searchHistoryList");
+    list.innerHTML = "";
+    searchHistory.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "mini-list-item";
+        div.onclick = () => {
+            let url;
+            if (item.engine === "google") {
+                url = "https://www.google.com/search?q=" + encodeURIComponent(item.q);
+            } else if (item.engine === "youtube") {
+                url = "https://www.youtube.com/results?search_query=" + encodeURIComponent(item.q);
             } else {
-                msg.innerHTML = `<div class="msg-bubble">${text}</div>`;
+                url = "https://www.bing.com/search?q=" + encodeURIComponent(item.q);
             }
+            window.open(url, "_blank");
+        };
+        const span = document.createElement("span");
+        span.textContent = `[${item.engine}] ${item.q}`;
+        div.appendChild(span);
+        list.appendChild(div);
+    });
+}
 
-            els.messagesBox.appendChild(msg);
-            els.messagesBox.scrollTop = els. messagesBox.scrollHeight;
-            return msg;
+document.getElementById("searchInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        const q = this.value.trim();
+        if (!q) return;
+        const engine = document.getElementById("searchEngine").value;
+        let url;
+        if (engine === "google") {
+            url = "https://www.google.com/search?q=" + encodeURIComponent(q);
+        } else if (engine === "youtube") {
+            url = "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+        } else {
+            url = "https://www.bing.com/search?q=" + encodeURIComponent(q);
         }
+        window.open(url, "_blank");
+        addNotification("Recherche", `Recherche ${engine} : "${q}"`);
+        pushSearchHistory(q, engine);
+    }
+});
 
-        async function sendMsg(txt) {
-            const msg = txt || els.chatInput.value. trim() || els.searchInput.value.trim();
-            if (!msg || STATE.isLoading) return;
+/* -------- NOTES -------- */
+function saveNotes() {
+    localStorage.setItem("hub_notes", document.getElementById("notesArea").value);
+}
 
-            els.chatInput.value = '';
-            els.searchInput.value = '';
-            addMsg(msg, 'user');
+function loadNotes() {
+    const saved = localStorage.getItem("hub_notes");
+    if (saved !== null) document.getElementById("notesArea").value = saved;
+}
 
-            STATE.msgCount++;
-            els.msgCount.textContent = STATE.msgCount;
+document.getElementById("notesArea").addEventListener("input", saveNotes);
 
-            STATE.isLoading = true;
-            const loadMsg = addMsg('', 'ai', true);
+/* -------- COPILOT -------- */
+function runCopilot() {
+    const input = document.getElementById("copilotInput");
+    const text = input.value.toLowerCase().trim();
+    if (!text) return;
 
-            try {
-                const res = await fetch(CONFIG.API_URL, {
-                    method:  'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
-                });
+    const apps = getAllApps();
+    let found = null;
 
-                const data = await res.json();
-                const reply = data.message || 'No response';
-
-                loadMsg.remove();
-                addMsg(reply, 'ai');
-
-                STATE.history.unshift({ user: msg, ai: reply, time: new Date().toLocaleString() });
-                if (STATE.history.length > 50) STATE.history.pop();
-                localStorage.setItem('history', JSON.stringify(STATE.history));
-
-            } catch (err) {
-                loadMsg.querySelector('.msg-bubble').innerHTML = `❌ Error: ${err.message}`;
-            }
-
-            STATE.isLoading = false;
+    for (const app of apps) {
+        const name = app.name.toLowerCase();
+        if (text.includes(name) || name.includes(text.replace("ouvre ", "").trim())) {
+            found = app;
+            break;
         }
+    }
 
-        function updateHistory() {
-            if (STATE.history.length === 0) {
-                els.historyList. innerHTML = '<div class="empty-history">No history</div>';
-                return;
-            }
-
-            els.historyList.innerHTML = STATE.history.map(h => `
-                <div class="history-item" onclick="document.getElementById('chatInput').value = ${JSON.stringify(h. user)}; closeHist();">
-                    ${h.user. substring(0, 50)}... <br><small style="color: var(--text-gray);">${h.time}</small>
-                </div>
-            `).join('');
+    if (found) {
+        openApp(found);
+    } else if (text.startsWith("note ")) {
+        const content = text.replace("note", "").trim();
+        if (content) {
+            const current = document.getElementById("notesArea").value;
+            document.getElementById("notesArea").value = (current ? current + "\n" : "") + content;
+            saveNotes();
+            addNotification("Copilot", "Note ajoutée.");
         }
+    } else {
+        const url = "https://www.bing.com/search?q=" + encodeURIComponent(text);
+        openApp({ name: "Recherche", url });
+    }
+}
 
-        function closeHist() {
-            els.historyModal.classList.remove('active');
-            els.historyBtn.classList.remove('active');
+document.getElementById("copilotInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        runCopilot();
+    }
+});
+
+/* -------- AJOUT D’APPS -------- */
+function addCustomApp() {
+    const nameEl = document.getElementById("newAppName");
+    const urlEl = document.getElementById("newAppUrl");
+    const iconEl = document.getElementById("newAppIcon");
+
+    const name = nameEl.value.trim();
+    const url = urlEl.value.trim();
+    const icon = iconEl.value.trim() || "apps";
+
+    if (!name || !url) return;
+
+    customApps.push({ name, url, icon });
+    saveCustomApps();
+    renderApps();
+    addNotification("Applications", `Nouvelle app ajoutée : ${name}`);
+
+    nameEl.value = "";
+    urlEl.value = "";
+    iconEl.value = "";
+}
+
+/* -------- LIENS RAPIDES -------- */
+function loadQuickLinks() {
+    const saved = localStorage.getItem("hub_quick_links");
+    if (saved) {
+        try {
+            quickLinks = JSON.parse(saved);
+        } catch {
+            quickLinks = [];
         }
+    }
+}
 
-        // Events
-        els.sendBtn.addEventListener('click', () => sendMsg());
-        els.searchBtn.addEventListener('click', () => sendMsg());
-        els.chatInput.addEventListener('keydown', e => {
-            if (e. key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMsg();
-            }
-        });
+function saveQuickLinks() {
+    localStorage.setItem("hub_quick_links", JSON.stringify(quickLinks));
+}
 
-        els.historyBtn.addEventListener('click', () => {
-            updateHistory();
-            els.historyModal.classList. add('active');
-            els.historyBtn.classList. add('active');
-        });
+function addQuickLink() {
+    const nameEl = document.getElementById("quickName");
+    const urlEl = document.getElementById("quickUrl");
+    const name = nameEl.value.trim();
+    const url = urlEl.value.trim();
+    if (!name || !url) return;
+    quickLinks.push({ name, url });
+    saveQuickLinks();
+    renderQuickLinks();
+    addNotification("Liens rapides", `Lien ajouté : ${name}`);
+    nameEl.value = "";
+    urlEl.value = "";
+}
 
-        els.closeHistory.addEventListener('click', closeHist);
-        els.closeHistoryBtn.addEventListener('click', closeHist);
-        els.clearBtn.addEventListener('click', () => {
-            STATE.history = [];
-            localStorage.removeItem('history');
-            updateHistory();
-        });
+function renderQuickLinks() {
+    const list = document.getElementById("quickLinksList");
+    list.innerHTML = "";
+    quickLinks.forEach((link, index) => {
+        const item = document.createElement("div");
+        item.className = "mini-list-item";
+        item.onclick = () => window.open(link.url, "_blank");
 
-        els.settingsBtn.addEventListener('click', () => els.settingsModal.classList.add('active'));
-        els.closeSettings.addEventListener('click', () => els.settingsModal.classList. remove('active'));
-        els.closeSettingsBtn.addEventListener('click', () => els.settingsModal. classList.remove('active'));
-        els.saveSettingsBtn. addEventListener('click', () => {
-            CONFIG.API_URL = els.apiUrl.value;
-            localStorage.setItem('apiUrl', CONFIG.API_URL);
-            els.settingsModal.classList.remove('active');
-        });
+        const span = document.createElement("span");
+        span.textContent = link.name;
 
-        els.newChatBtn.addEventListener('click', () => {
-            STATE.messages = [];
-            STATE.msgCount = 0;
-            els.msgCount.textContent = '0';
-            els.messagesBox.innerHTML = '<div class="empty-state"><div class="empty-icon">💬</div><div>New Chat</div></div>';
-        });
+        const btn = document.createElement("button");
+        btn.textContent = "×";
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            quickLinks.splice(index, 1);
+            saveQuickLinks();
+            renderQuickLinks();
+        };
 
-        // Init
-        STATE.history = JSON.parse(localStorage.getItem('history')) || [];
-        CONFIG.API_URL = localStorage.getItem('apiUrl') || CONFIG.API_URL;
-        els.apiUrl.value = CONFIG. API_URL;
-    </script>
+        item.appendChild(span);
+        item.appendChild(btn);
+        list.appendChild(item);
+    });
+}
+
+/* -------- AFFICHER PLUS -------- */
+document.getElementById("moreToggle").addEventListener("click", function() {
+    const section = document.getElementById("moreAppsSection");
+    if (section.style.display === "none" || section.style.display === "") {
+        section.style.display = "block";
+        this.textContent = "Afficher moins d’applications";
+    } else {
+        section.style.display = "none";
+        this.textContent = "Afficher plus d’applications";
+    }
+});
+
+/* -------- NOTIF PANEL -------- */
+document.getElementById("notifToggle").addEventListener("click", function() {
+    const panel = document.getElementById("notificationsPanel");
+    panel.style.display = (panel.style.display === "flex") ? "none" : "flex";
+});
+
+/* -------- CALCULATRICE -------- */
+let calcBuffer = "0";
+
+function openCalc() {
+    document.getElementById("calcModalBackdrop").style.display = "flex";
+    document.getElementById("calcDisplay").textContent = calcBuffer;
+}
+
+function closeCalc() {
+    document.getElementById("calcModalBackdrop").style.display = "none";
+}
+
+function calcInput(val) {
+    if (calcBuffer === "0" && !isNaN(val)) {
+        calcBuffer = val;
+    } else {
+        calcBuffer += val;
+    }
+    document.getElementById("calcDisplay").textContent = calcBuffer;
+}
+
+function calcClear() {
+    calcBuffer = "0";
+    document.getElementById("calcDisplay").textContent = calcBuffer;
+}
+
+function calcEquals() {
+    try {
+        const result = eval(calcBuffer);
+        calcBuffer = String(result);
+        document.getElementById("calcDisplay").textContent = calcBuffer;
+    } catch {
+        calcBuffer = "0";
+        document.getElementById("calcDisplay").textContent = "Erreur";
+    }
+}
+
+/* -------- TODO -------- */
+let todos = [];
+
+function loadTodos() {
+    const saved = localStorage.getItem("hub_todos");
+    if (saved) {
+        try {
+            todos = JSON.parse(saved);
+        } catch {
+            todos = [];
+        }
+    }
+}
+
+function saveTodos() {
+    localStorage.setItem("hub_todos", JSON.stringify(todos));
+}
+
+function renderTodos() {
+    const list = document.getElementById("todoList");
+    list.innerHTML = "";
+    todos.forEach((t, index) => {
+        const item = document.createElement("div");
+        item.className = "todo-item";
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = t.done;
+        cb.onchange = () => {
+            todos[index].done = cb.checked;
+            saveTodos();
+            renderTodos();
+        };
+
+        const span = document.createElement("span");
+        span.textContent = t.text;
+        if (t.done) span.classList.add("done");
+
+        item.appendChild(cb);
+        item.appendChild(span);
+        list.appendChild(item);
+    });
+}
+
+function openTodo() {
+    document.getElementById("todoModalBackdrop").style.display = "flex";
+    renderTodos();
+}
+
+function closeTodo() {
+    document.getElementById("todoModalBackdrop").style.display = "none";
+}
+
+function addTodo() {
+    const input = document.getElementById("todoInput");
+    const text = input.value.trim();
+    if (!text) return;
+    todos.push({ text, done: false });
+    saveTodos();
+    renderTodos();
+    input.value = "";
+}
+
+/* -------- TIMER -------- */
+let timerInterval = null;
+let timerRemaining = 0;
+
+function startTimer() {
+    const minutesInput = document.getElementById("timerMinutes");
+    const minutes = parseInt(minutesInput.value, 10);
+    if (isNaN(minutes) || minutes <= 0) return;
+
+    timerRemaining = minutes * 60;
+    updateTimerDisplay();
+
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        timerRemaining--;
+        if (timerRemaining <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerRemaining = 0;
+            updateTimerDisplay();
+            addNotification("Timer", "Le timer est terminé.");
+            alert("Timer terminé !");
+        } else {
+            updateTimerDisplay();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const display = document.getElementById("timerDisplay");
+    if (timerRemaining <= 0) {
+        display.textContent = "Aucun timer en cours.";
+        return;
+    }
+    const m = Math.floor(timerRemaining / 60);
+    const s = timerRemaining % 60;
+    display.textContent = `Temps restant : ${m} min ${s.toString().padStart(2, "0")} s`;
+}
+
+/* -------- POMODORO -------- */
+let pomodoroInterval = null;
+let pomodoroRemaining = 0;
+let pomodoroMode = null; // "work" ou "break"
+
+function startPomodoroWork() {
+    pomodoroMode = "work";
+    pomodoroRemaining = 25 * 60;
+    runPomodoro();
+    addNotification("Pomodoro", "Session de travail démarrée (25 min).");
+}
+
+function startPomodoroBreak() {
+    pomodoroMode = "break";
+    pomodoroRemaining = 5 * 60;
+    runPomodoro();
+    addNotification("Pomodoro", "Pause démarrée (5 min).");
+}
+
+function resetPomodoro() {
+    if (pomodoroInterval) clearInterval(pomodoroInterval);
+    pomodoroInterval = null;
+    pomodoroRemaining = 0;
+    pomodoroMode = null;
+    document.getElementById("pomodoroDisplay").textContent = "Pomodoro inactif.";
+}
+
+function runPomodoro() {
+    if (pomodoroInterval) clearInterval(pomodoroInterval);
+    updatePomodoroDisplay();
+    pomodoroInterval = setInterval(() => {
+        pomodoroRemaining--;
+        if (pomodoroRemaining <= 0) {
+            clearInterval(pomodoroInterval);
+            pomodoroInterval = null;
+            addNotification("Pomodoro", pomodoroMode === "work" ? "Travail terminé, prends une pause." : "Pause terminée, retour au travail.");
+            alert("Pomodoro terminé !");
+            pomodoroMode = null;
+            pomodoroRemaining = 0;
+            updatePomodoroDisplay();
+        } else {
+            updatePomodoroDisplay();
+        }
+    }, 1000);
+}
+
+function updatePomodoroDisplay() {
+    const display = document.getElementById("pomodoroDisplay");
+    if (!pomodoroMode || pomodoroRemaining <= 0) {
+        display.textContent = "Pomodoro inactif.";
+        return;
+    }
+    const m = Math.floor(pomodoroRemaining / 60);
+    const s = pomodoroRemaining % 60;
+    const label = pomodoroMode === "work" ? "Travail" : "Pause";
+    display.textContent = `${label} : ${m} min ${s.toString().padStart(2, "0")} s`;
+}
+
+/* -------- INIT -------- */
+(function init() {
+    const savedTheme = localStorage.getItem("hub_theme") || "dark";
+    applyTheme(savedTheme);
+
+    loadCustomApps();
+    loadTodos();
+    loadQuickLinks();
+
+    const savedRecent = localStorage.getItem("hub_recent_apps");
+    if (savedRecent) {
+        try { recentApps = JSON.parse(savedRecent); } catch { recentApps = []; }
+    }
+
+    const savedSearch = localStorage.getItem("hub_search_history");
+    if (savedSearch) {
+        try { searchHistory = JSON.parse(savedSearch); } catch { searchHistory = []; }
+    }
+
+    renderApps();
+    renderTodos();
+    renderQuickLinks();
+    renderRecentApps();
+    renderSearchHistory();
+    pickRandomQuote();
+
+    updateTime();
+    setInterval(updateTime, 30000);
+    updateWeather();
+    setInterval(updateWeather, 10 * 60 * 1000);
+    loadNotes();
+
+    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+
+    addNotification("Système", "Hub démarré avec succès.");
+})();
+</script>
+
 </body>
 </html>
